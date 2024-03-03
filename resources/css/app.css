@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .bar1,
+    .bar2,
+    .bar3 {
+        @apply w-8 m-[5px] h-[3px] transition-transform duration-300 ease-in-out bg-white;
+    }
+    .change .bar1 {
+        @apply translate-y-[8px] -rotate-45;
+    }
+    .change .bar2 {
+        @apply opacity-0;
+    }
+    .change .bar3 {
+        @apply -translate-y-[8px] rotate-45;
+    }
+}
+
+@layer utilities {
+    .grid-template-row-0 {
+        grid-template-rows: 0fr;
+    }
+
+    .grid-template-row-1 {
+        grid-template-rows: 1fr;
+    }
+    .height-transition {
+        display: grid;
+        transition: grid-template-rows 0.3s ease-in-out;
+    }
+    .height-transition > div {
+        overflow: hidden;
+    }
+
+    .grid-template-col-0 {
+        grid-template-columns: 0fr;
+    }
+
+    .grid-template-col-1 {
+        grid-template-columns: 1fr;
+    }
+    .width-transition {
+        display: grid;
+        transition: grid-template-columns 0.3s ease-in-out;
+    }
+
+    .width-transition > ul {
+        overflow-x: hidden;
+    }
+}
