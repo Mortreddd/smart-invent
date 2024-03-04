@@ -22,7 +22,6 @@ class LoginController extends Controller
         if($request->authenticate() ){
             return RouteServiceProvider::HOME;
         }
-
         return back()->withErrors($request->messages());
     }
 
