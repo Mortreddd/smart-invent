@@ -5,36 +5,36 @@ import Sidebar from "@/Components/Sidebar";
 import SettingIcon from "@/Icons/SettingIcon";
 import DropdownButton from "@/Components/DropdownButton";
 import NotificationIcon from "@/Icons/NotificationIcon";
-export default function DashboardLayout({ children }) {
+export default function Layout({ children }) {
     const [openSidebar, setOpenSidebar] = useState(false);
     return (
         <main className="relative flex w-full h-[100vh] bg-gray-100">
             <Sidebar openSidebar={openSidebar} />
             <section className="w-full h-[100vh] overflow-y-hidden">
-                <nav className=" bg-primary w-full h-fit">
-                    <div className="flex justify-between items-center p-4 w-auto">
+                <nav className="w-full bg-primary h-fit">
+                    <div className="flex items-center justify-between w-auto p-4">
                         <HamburgerButton
                             open={openSidebar}
                             handleBurgerClick={() =>
                                 setOpenSidebar(!openSidebar)
                             }
                         />
-                        <ul className="flex items-center gap-3 w-auto text-white ">
+                        <ul className="flex items-center w-auto gap-3 text-white ">
                             <li>
                                 <Link
                                     as="button"
-                                    className="transition-colors duration-300 hover:text-gray-200 ease-in-out p-1"
+                                    className="p-1 transition-colors duration-300 ease-in-out hover:text-gray-200"
                                 >
                                     <NotificationIcon size={8} />
                                 </Link>
                             </li>
                             <li>
                                 <DropdownButton text={"User"}>
-                                    <ul className="w-32 h-fit text-white rounded-lg bg-white/30 backdrop-blur-sm">
+                                    <ul className="w-32 text-white rounded-lg h-fit bg-white/30 backdrop-blur-sm">
                                         <li>
                                             <Link
                                                 as="button"
-                                                className="transition-colors duration-300 hover:text-gray-200 ease-in-out p-1"
+                                                className="p-1 transition-colors duration-300 ease-in-out hover:text-gray-200"
                                             >
                                                 Profile
                                             </Link>
@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }) {
                                         <li>
                                             <Link
                                                 as="button"
-                                                className="transition-colors duration-300 hover:text-gray-200 ease-in-out p-1"
+                                                className="p-1 transition-colors duration-300 ease-in-out hover:text-gray-200"
                                             >
                                                 Logout
                                             </Link>
@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }) {
                             <li>
                                 <Link
                                     as="button"
-                                    className="transition-colors duration-300 hover:text-gray-200 ease-in-out p-1"
+                                    className="p-1 transition-colors duration-300 ease-in-out hover:text-gray-200"
                                 >
                                     <SettingIcon size={8} />
                                 </Link>

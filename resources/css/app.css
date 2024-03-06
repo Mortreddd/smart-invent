@@ -17,6 +17,13 @@
     .change .bar3 {
         @apply -translate-y-[8px] rotate-45;
     }
+
+    .active-link {
+        @apply text-primary hover:text-secondary;
+    }
+    .inactive-link {
+        @apply text-black hover:text-primary;
+    }
 }
 
 @layer utilities {

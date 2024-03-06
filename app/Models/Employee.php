@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class Employee extends Model
 {
     use HasFactory, Authorizable, Notifiable;
 

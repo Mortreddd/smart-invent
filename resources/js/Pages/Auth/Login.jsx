@@ -1,9 +1,8 @@
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, useForm, usePage, router } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import MailIcon from "@/Icons/MailIcon";
 
-export default function Login({}) {
+export default function Login() {
     const { errors } = usePage().props;
     const { data, setData, processing } = useForm({
         email: "",
@@ -20,12 +19,14 @@ export default function Login({}) {
             <Head>
                 <title>Login</title>
             </Head>
-            <main className="absolute top-0 left-0 h-full w-full flex justify-end items-center bg-white">
-                <form action="" className="bg-none w-96 p-8">
+            <main
+                className={`relative flex items-center justify-center md:justify-end md:pr-20 w-full h-[100vh] bg-white lg:bg-login lg:bg-contain md:bg-no-repeat`}
+            >
+                <form className="p-8 bg-none w-96">
                     <div className="mb-3">
                         <label
                             htmlFor=""
-                            className="block text-gray-700 text-xl font-bold text mb-2"
+                            className="block mb-2 text-xl font-bold text-gray-700 text"
                         >
                             Email Address
                         </label>
@@ -45,7 +46,7 @@ export default function Login({}) {
                     <div className="mb-3">
                         <label
                             htmlFor=""
-                            className="block text-gray-700 text-xl font-bold text mb-2"
+                            className="block mb-2 text-xl font-bold text-gray-700 text"
                         >
                             Password
                         </label>
@@ -67,9 +68,9 @@ export default function Login({}) {
                         />
                     </div>
 
-                    <div className="mb-5 w-full">
+                    <div className="w-full mb-5">
                         <PrimaryButton
-                            href="/"
+                            href="/admin/dashboard"
                             method="get"
                             as="button"
                             type="submit"
