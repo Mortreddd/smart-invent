@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Stock;
 
 class Product extends Model
 {
@@ -13,14 +14,16 @@ class Product extends Model
     protected $fillable = [
         'name',
         'image',
-        'amount',
         'created_at',
         'updated_at',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
 
     public function stocks()
     {
-        return $this->hasManu(Stock::class);
+        return $this->hasMany(Stock::class);
     }
 }

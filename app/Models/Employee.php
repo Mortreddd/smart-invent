@@ -20,10 +20,11 @@ class Employee extends Model
         'email',
         'password',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
-        'password' => 'hashed'
+        'password' => 'hashed',
+        'created_at' => 'datetime'
     ];
 }

@@ -1,11 +1,12 @@
 import ProductIcon from "@/images/product_icon.png";
 import SupplierIcon from "@/images/supplier_icon.png";
 import SalesRecordIcon from "@/images/cash_with_arrow_icon.png";
+import DocumentText from "@/images/document-text.png";
 import Tab from "./Tab";
 import { usePage, Link } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function TabLayout({ children }) {
+export default function TabLayout({ sideBarText }) {
     const [tab, setTab] = useState("Products");
     const { url } = usePage();
     return (
@@ -41,6 +42,16 @@ export default function TabLayout({ children }) {
                 >
                     Sales Record
                 </Tab>
+                <Tab
+                    image={DocumentText}
+                    className={
+                        "bg-[#FFFFFF] object-center object-cover h-14 w-14 rounded-l"
+                    }
+                    href="/admin/dashboard/logs"
+                    onClick={() => setTab("Activity Logs")}
+                >
+                    Activity Logs
+                </Tab>
             </div>
             <div
                 className={`w-full h-fit py-5 px-3 ${
@@ -49,12 +60,9 @@ export default function TabLayout({ children }) {
                         : "hidden"
                 } `}
             >
-                <Link
-                    href="/admin/dashboard"
-                    className="font-sans text-xl transition-all duration-300 ease-in-out translate-y-0 text-slate-700 hover:-translate-y-1 hover:text-slate-800"
-                >
-                    Dashboard
-                </Link>
+                <h3 className="font-sans text-xl transition-all duration-300 ease-in-out text-slate-700 hover:text-slate-800">
+                    {sideBarText}
+                </h3>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"

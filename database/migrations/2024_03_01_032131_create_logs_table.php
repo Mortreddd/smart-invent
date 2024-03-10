@@ -14,8 +14,7 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->text('activity');
+            $table->text('event');
             $table->timestamps();
         });
     }

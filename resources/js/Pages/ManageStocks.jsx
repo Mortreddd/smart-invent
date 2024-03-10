@@ -1,15 +1,15 @@
 import { Head } from "@inertiajs/react";
 import Layout from "./Layout";
 import TabLayout from "@/Components/TabLayout";
-export default function Dashboard({ children }) {
+export default function ManageStocks({ children }) {
     return (
         <>
             <Head>
-                <title>Dashboard</title>
+                <title>Manage Stock</title>
             </Head>
-            <Layout activeLink={1}>
-                <div className="w-full h-full ">
-                    <TabLayout sideBarText={"Dashboard"} />
+            <Layout activeLink={2}>
+                <div className="w-full h-full">
+                    <TabLayout sideBarText={"Manage Stocks"} />
                     <div className="w-full h-full">{children}</div>
                 </div>
             </Layout>

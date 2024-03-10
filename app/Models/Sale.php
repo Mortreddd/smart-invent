@@ -13,6 +13,10 @@ class Sale extends Model
         'product_id',
         'earned',
         'created_at',
-        'updated_at'
+        'updated_at',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime'
     ];
 }

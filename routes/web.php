@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(LoginController::class)
     ->middleware(['guest'])
-    ->group(function() {
-        Route::get('/login', 'index')
-            ->name('auth.login');
-            
-        Route::post('/login', 'store');
+        ->group(function() {
+            Route::get('/login', 'index')
+                ->name('auth.login');
+                
+            Route::post('/login', 'store');
 });
 
 require __DIR__.'/auth.php';

@@ -11,12 +11,16 @@ class Log extends Model
 
 
     protected $fillable = [
-        'employee_id',
+        'id',
         'activity',
         'created_at',
         'updated_at'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+    
 
     
 }

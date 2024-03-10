@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Log;
 use App\Models\Product;
 use App\Models\Size;
 use Illuminate\Database\Migrations\Migration;
@@ -16,8 +17,9 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Size::class)->constrained()->cascadeOnDelete();
-            $table->integer('stock');
+            $table->foreignIdFor(Size::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->integer('stock')->default(0);
+            $table->float('price');
             $table->timestamps();
         });
     }
