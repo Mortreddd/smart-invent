@@ -8,10 +8,7 @@ export default function ManageStocks({ children }) {
                 <title>Manage Stock</title>
             </Head>
             <Layout activeLink={2}>
-                <div className="w-full h-full">
-                    <TabLayout sideBarText={"Manage Stocks"} />
-                    <div className="w-full h-full">{children}</div>
-                </div>
+                <div className="w-full h-full">{children}</div>
             </Layout>
         </>
     );

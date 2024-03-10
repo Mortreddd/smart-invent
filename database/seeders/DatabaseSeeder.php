@@ -4,8 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Course;
 use App\Models\Employee;
+use App\Models\Fabric;
 use App\Models\Product;
+use App\Models\Sale;
 use App\Models\Size;
 use App\Models\Stock;
 use Illuminate\Database\Seeder;
@@ -154,7 +157,7 @@ class DatabaseSeeder extends Seeder
             [
                 'product_id' => 4,
                 'size_id' => 2,
-                'stock' => 50,
+                'stock' => 35,
                 'price' => 170,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -163,7 +166,7 @@ class DatabaseSeeder extends Seeder
             [
                 'product_id' => 4,
                 'size_id' => 3,
-                'stock' => 50,
+                'stock' => 40,
                 'price' => 200,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -181,7 +184,112 @@ class DatabaseSeeder extends Seeder
 
         )
         ->create();
-
-
+        Course::factory()->count(5)->sequence(
+            [
+                'name' => 'Marketing',
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'name' => 'Accountancy',
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'name' => 'Legal Management',
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'name' => 'Real Estate',
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'name' => 'Psychology',
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+        )
+        ->create();
+        Fabric::factory()->count(7)->sequence(
+            [
+                'course_id' => 1,
+                'image' => 'fabrics/marketing-blouse.jpg',
+                'textile' => 'Blouse',
+                'stock' => 4,
+                'price' => 65.00,
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'course_id' => 1,
+                'image' => 'fabrics/marketing-pants.jpg',
+                'textile' => 'Pants',
+                'stock' => 6,
+                'price' => 70.00,
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'course_id' => 2,
+                'image' => 'fabrics/accountancy-blouse.jpg',
+                'textile' => 'Blouse',
+                'stock' => 1,
+                'price' => 70.00,
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'course_id' => 2,
+                'image' => 'fabrics/accountancy-pants.jpg',
+                'textile' => 'Pants',
+                'stock' => 4,
+                'price' => 65.00,
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'course_id' => 3,
+                'image' => 'fabrics/legal-management-blouse.jpg',
+                'textile' => 'Blouse',
+                'stock' => 9,
+                'price' => 60.00,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'course_id' => 4,
+                'image' => 'fabrics/real-estate-blouse.jpg',
+                'textile' => 'Blouse',
+                'stock' => 3,
+                'price' => 70.00,
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+            [
+                'course_id' => 5,
+                'image' => 'fabrics/psychology-fabric.jpg',
+                'textile' => 'Any',
+                'stock' => 4,
+                'price' => 70.00,
+                'created_at' => now(),
+                'updated_at' => now()  
+            ],
+        )
+        ->create();
+        $products = Product::all();
+        for($i = 1; $i <= 10000; $i++){
+            $product = Product::find(rand(1, $products->count()));
+            $quantity = rand(1, 5);
+            $stock = Stock::where('product_id', $product->id)->first();
+            Sale::create([
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+                'earned' => $stock->price * $quantity,
+                'created_at' => fake()->dateTimeBetween('-2 years', 'now'),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Log;
-use App\Models\Product;
+use App\Models\Course;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('fabrics', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-            $table->integer('quantity');
-            $table->float('earned');
+            $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
+            $table->string('image');
+            $table->enum('textile', ["Blouse", "Pants", "Skirt", "Any"]);
+            $table->integer('stock');
+            $table->float('price');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('fabrics');
     }
 };
