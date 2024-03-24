@@ -16,12 +16,15 @@ class LoginController extends Controller
         return Inertia::render('Auth/Login');
     }
 
-    public function store(LoginRequest $request)
+    public function login(LoginRequest $request)
     {
-        if($request->authenticate()){
+        // dd($request->all());
+        $credentials = $request->only(['email', 'password']);
+        if(Auth::attempt($credentials)){
             return Redirect::route('home');
         }
         return Redirect::back()->withErrors($request->messages());
     }
+
 
 }

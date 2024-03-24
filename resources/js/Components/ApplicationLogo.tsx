@@ -20,7 +20,7 @@ export default function ApplicationLogo({
             <img
                 src={Logo}
                 alt={"Logo"}
-                className={`${className} xl:w-${lg} xl:h-${xl} md:w-${md} w-16 md:h-${md} lg:h-${lg} lg:h-${lg} sm:w-${sm} sm:h-${sm} h-16 mix-blend-multiply object-cover object-center`}
+                className={`${className} xl:w-${lg} xl:h-${xl} md:w-${md} md:h-${md} lg:h-${lg} lg:h-${lg} sm:w-${sm} sm:h-${sm} mix-blend-multiply h-28 w-28 object-contain object-center`}
             />
         </>
     );

@@ -11,7 +11,7 @@
 //     };
 // };
 
-export interface Employee {
+export interface User {
     id: number;
     firstName: string;
     middleName: string;
@@ -20,13 +20,13 @@ export interface Employee {
     email: string;
     createdAt: number;
     updatedAt: number;
-    logId: number;
+    logId?: number;
 }
 
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
     auth: {
-        employee: Employee;
+        user: User;
     };
 };

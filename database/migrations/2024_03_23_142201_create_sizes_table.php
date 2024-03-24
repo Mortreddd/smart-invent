@@ -19,18 +19,18 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('image');
+            $table->timestamps();
+        });
+
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->float('earned');
-            $table->timestamps();
-        });
-
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('image');
             $table->timestamps();
         });
 
@@ -50,8 +50,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('sizes');
-        Schema::dropIfExists('sales');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('sales');
         Schema::dropIfExists('stocks');
 
     }
