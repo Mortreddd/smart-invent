@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .fade-in {
+        animation: fadeInAnimation ease-in 0.9s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-in-early {
+        animation: fadeInAnimation ease-out 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-in-delay {
+        animation: fadeInAnimation ease-in 1.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        80% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

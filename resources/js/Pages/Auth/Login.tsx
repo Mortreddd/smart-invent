@@ -30,7 +30,7 @@ export default function Login() {
                 <title>Smart Invent - Login</title>
             </Head>
             <main className="w-full h-[100vh] flex justify-evenly bg-white items-center md:px-10 px-5 ">
-                <div className="md:block hidden md:w-[50vw] h-fit borde border-solid">
+                <div className="md:block fade-in-early hidden md:w-[50vw] h-fit borde border-solid">
                     <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-primary  md:text-5xl lg:text-6xl text-center dark:text-white">
                         Smart Invent
                     </h1>
@@ -44,7 +44,7 @@ export default function Login() {
                 </div>
                 <form
                     onSubmit={handleSubmit}
-                    className="xl:w-96 md:72 space-y-5 xl:rounded-lg bg-secondary xl:p-10 md:p-6 p-3 h-fit w-full mx-2 md:mx-0 flex flex-col items-center"
+                    className="xl:w-96 fade-in md:72 space-y-5 xl:rounded-lg bg-secondary xl:p-10 md:p-6 p-3 h-fit w-full mx-2 md:mx-0 flex flex-col items-center"
                 >
                     <div className="w-full">
                         <ApplicationLogo
