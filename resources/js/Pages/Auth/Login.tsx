@@ -1,10 +1,25 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, Link } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputText from "@/Components/InputText";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import {
+    GoogleAuthProvider,
+    browserPopupRedirectResolver,
+    signInWithPopup,
+} from "firebase/auth";
+import { authenticated } from "@/Firebase/Google";
+import LoadingButton from "@/Components/LoadingButton";
+
 export default function Login() {
-    const [success, setSuccess] = useState(false);
+    async function RedirectSignIn(event: React.MouseEvent<HTMLButtonElement>) {
+        return await signInWithPopup(
+            authenticated,
+            new GoogleAuthProvider(),
+            browserPopupRedirectResolver
+        );
+    }
+
     const { data, setData, processing, post, errors, transform, reset } =
         useForm({
             email: "",
@@ -18,16 +33,15 @@ export default function Login() {
             ...data,
             remember: data.remember ? "on" : "",
         }));
-        post("/login", {
+        post(route("login.verify"), {
             preserveScroll: true,
             onError: () => reset("password"),
-            onSuccess: () => setSuccess(true),
         });
     }
     return (
         <>
             <Head>
-                <title>Smart Invent - Login</title>
+                <title>Login</title>
             </Head>
             <main className="w-full h-[100vh] flex justify-evenly bg-white items-center md:px-10 px-5 ">
                 <div className="md:block fade-in-early hidden md:w-[50vw] h-fit borde border-solid">
@@ -42,106 +56,103 @@ export default function Login() {
                         voluptate.
                     </p>
                 </div>
-                <form
-                    onSubmit={handleSubmit}
-                    className="xl:w-96 fade-in md:72 space-y-5 xl:rounded-lg bg-secondary xl:p-10 md:p-6 p-3 h-fit w-full mx-2 md:mx-0 flex flex-col items-center"
-                >
-                    <div className="w-full">
-                        <ApplicationLogo
-                            className="mx-auto my-3"
-                            xl="36"
-                            lg="36"
-                        />
-                    </div>
-                    {(errors.email || errors.password) && (
+                <div className="xl:w-96 fade-in md:72 space-y-5 xl:rounded-lg bg-secondary xl:p-10 md:p-6 p-3 h-fit w-full mx-2 md:mx-0 flex flex-col items-center">
+                    <form
+                        className="w-full h-full space-y-5"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="w-full">
-                            <div role="alert" className="alert alert-error">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="stroke-current shrink-0 h-6 w-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            <ApplicationLogo
+                                className="mx-auto my-3"
+                                xl="36"
+                                lg="36"
+                            />
+                        </div>
+                        {(errors.email || errors.password) && (
+                            <div className="w-full">
+                                <div role="alert" className="alert alert-error">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="stroke-current shrink-0 h-6 w-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        />
+                                    </svg>
+                                    <span>
+                                        {errors.email || errors.password}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                        <div className="w-full space-y-2">
+                            <InputText
+                                type={"email"}
+                                className={"block"}
+                                value={data.email}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                    setData({ ...data, email: e.target.value })
+                                }
+                                placeholder={"Enter Email"}
+                            />
+                            <InputText
+                                type={"password"}
+                                className={"block"}
+                                value={data.password}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                    setData({
+                                        ...data,
+                                        password: e.target.value,
+                                    })
+                                }
+                                placeholder={"Enter Password"}
+                            />
+
+                            <div className="w-full flex justify-between items-center space-x-3">
+                                <label className="cursor-pointer flex justify-start items-center user-select-none gap-3">
+                                    <span className="label-text text-md text-gray-600 ">
+                                        Remember me
+                                    </span>
+                                    <input
+                                        type="checkbox"
+                                        name="remember"
+                                        className="checkbox checkbox-sm checkbox-primary [--chkfg:white]"
                                     />
-                                </svg>
-                                <span>{errors.email || errors.password}</span>
+                                </label>
+                                <a
+                                    href={route("password.request")}
+                                    target="_blank"
+                                    className="text-md text-gray-600 hover:text-gray-700"
+                                >
+                                    Forgot password?
+                                </a>
                             </div>
                         </div>
-                    )}
-                    {success && (
-                        <div role="alert" className="alert alert-success">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="stroke-current shrink-0 h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            <span>Login Successfully!</span>
-                        </div>
-                    )}
-                    <div className="w-full space-y-2">
-                        <InputText
-                            type={"email"}
-                            className={"block"}
-                            value={data.email}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setData({ ...data, email: e.target.value })
-                            }
-                            placeholder={"Enter Email"}
-                        />
-                        <InputText
-                            type={"password"}
-                            className={"block"}
-                            value={data.password}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setData({ ...data, password: e.target.value })
-                            }
-                            placeholder={"Enter Password"}
-                        />
 
-                        <div className="w-full flex space-x-3">
-                            <label className="cursor-pointer flex justify-start items-center user-select-none py-1 gap-3">
-                                <span className="label-text text-gray-600">
-                                    Remember me
-                                </span>
-                                <input
-                                    type="checkbox"
-                                    name="remember"
-                                    className="checkbox checkbox-primary"
-                                />
-                            </label>
+                        <div className="w-full">
+                            {processing ? (
+                                <LoadingButton />
+                            ) : (
+                                <PrimaryButton
+                                    type={"submit"}
+                                    className={"btn-block text-white text-lg"}
+                                >
+                                    Login
+                                </PrimaryButton>
+                            )}
                         </div>
-                    </div>
-
-                    <div className="w-full">
-                        {processing ? (
-                            <button className="btn btn-disabled btn-block">
-                                <span className="loading loading-spinner"></span>
-                            </button>
-                        ) : (
-                            <PrimaryButton
-                                type={"submit"}
-                                className={"btn-block text-white text-lg"}
-                            >
-                                Login
-                            </PrimaryButton>
-                        )}
-                    </div>
+                    </form>
                     <div className="divider">or</div>
                     <div className="w-full ">
-                        <button className="text-lg mx-auto bg-transparent border border-solid border-red-700 text-red-700 hover:border-transparent hover:bg-red-700 hover:text-white transition-colors rounded px-3 py-1 flex items-center gap-2  duration-300 ease-in-out">
+                        <button
+                            onClick={RedirectSignIn}
+                            className="text-lg mx-auto bg-transparent border border-solid border-red-700 text-red-700 hover:border-transparent hover:bg-red-700 hover:text-white transition-colors rounded px-3 py-1 flex items-center gap-2  duration-300 ease-in-out"
+                        >
                             Google
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +166,7 @@ export default function Login() {
                             </svg>
                         </button>
                     </div>
-                </form>
+                </div>
             </main>
         </>
     );

@@ -49,10 +49,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sizes');
-        Schema::dropIfExists('products');
-        Schema::dropIfExists('sales');
         Schema::dropIfExists('stocks');
+        Schema::dropIfExists('sales');
+        Schema::dropIfExists('products');
+        Schema::dropIfExists('sizes');
 
     }
 };

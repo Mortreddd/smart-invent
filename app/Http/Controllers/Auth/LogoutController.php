@@ -14,8 +14,6 @@ class LogoutController extends Controller
     public function __invoke(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
         return Redirect::route('login')->with(['success' => 'Logout Successfully!']);
     }
 }

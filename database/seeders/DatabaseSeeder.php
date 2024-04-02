@@ -39,6 +39,22 @@ class DatabaseSeeder extends Seeder
                 'email' => 'emmanmale@gmail.com',
                 'password' => Hash::make('emmanuelmale25'),
                 'remember_token' => null,
+                'email_verified_at' => now(),
+                'created_at' => now()->subtract(3, 'day'),
+                'updated_at' => now(),
+            ]
+        );
+        Employee::factory()->create(
+            [
+                'first_name' => "Kristine",
+                'middle_name' => 'A',
+                'last_name' => 'Cunamay',
+                'role' => 'Admin',
+                'gender' => 'M',
+                'email' => 'kristinecunamay9@gmail.com',
+                'password' => Hash::make('12345678'),
+                'remember_token' => null,
+                'email_verified_at' => now(),
                 'created_at' => now()->subtract(3, 'day'),
                 'updated_at' => now(),
             ]

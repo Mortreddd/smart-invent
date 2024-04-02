@@ -5,23 +5,24 @@ interface InputTextProps extends HTMLAttributes<HTMLInputElement> {
     type: HTMLInputTypeAttribute;
     value?: string;
     placeholder: HTMLInputTypeAttribute;
-    disabled?: boolean;
+    props?: React.ReactNode;
 }
 
-export default function InputText({
+export default function TextInputError({
     className,
     type,
     value,
-    disabled,
+    placeholder,
     ...props
 }: InputTextProps) {
     return (
         <>
             <input
                 type={type}
+                placeholder={placeholder}
                 value={value}
                 {...props}
-                className={`${className} input input-block input-bordered input-primary w-full max-w-xs`}
+                className={`input input-bordered input-error w-full max-w-xs ${className}`}
             />
         </>
     );
