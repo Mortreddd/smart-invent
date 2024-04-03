@@ -27,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
             ForgotPasswordEvent::class,
             ProcessForgotPasswordListener::class
         );
+
     }
 }

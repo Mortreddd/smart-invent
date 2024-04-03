@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Firebase\LoginUsingFirebaseController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,12 @@ Route::middleware(['guest'])->group(function() {
 
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.verify');
+});
+
+
+// * FIREABASE LOGIN
+Route::middleware(['guest'])->group(function() {
+    Route::post('/firebase/login', LoginUsingFirebaseController::class)->name('firebase.login');
 });
 
 

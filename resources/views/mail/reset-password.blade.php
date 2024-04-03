@@ -12,7 +12,7 @@
         <p style="font-size: 18px; line-height: 24px; color: #6b7280; text-align: center; margin-top: 20px; margin-bottom: 20px;">
             If you've lost your password or wish to reset it, use the link below to get started.
         </p>
-        <a href="{{ route('password.reset', ['token' => $token, 'email' => $email ]) }}" style="display: inline-block; padding: 10px 20px; background: #10b981; color: white; text-decoration: none; font-size: 18px; margin-left: auto; margin-right: auto; border-radius: 4px; transition: all;">Reset Password</a>
+        <a href="{{ route('password.reset', ['token' => $token, 'email' => $email ]) }}" style="display: block; padding: 10px 20px; background: #10b981; color: white; text-decoration: none; font-size: 18px; margin-left: auto; margin-right: auto; border-radius: 4px; transition: all;">Reset Password</a>
         <p style="font-size: 14px; line-height: 20px; color: #d1d5db; text-align: center;">
             If you did not request a password reset, you can safely ignore this email. Only a person with access to your email can reset your account password.
         </p>

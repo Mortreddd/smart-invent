@@ -1,31 +1,29 @@
-import { Head, useForm, Link } from "@inertiajs/react";
+import { Head, useForm, router } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputText from "@/Components/InputText";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
-import {
-    GoogleAuthProvider,
-    browserPopupRedirectResolver,
-    signInWithPopup,
-} from "firebase/auth";
-import { authenticated } from "@/Firebase/Google";
+import { GetUidFromGoogle } from "@/Firebase/Google";
 import LoadingButton from "@/Components/LoadingButton";
 
 export default function Login() {
-    async function RedirectSignIn(event: React.MouseEvent<HTMLButtonElement>) {
-        return await signInWithPopup(
-            authenticated,
-            new GoogleAuthProvider(),
-            browserPopupRedirectResolver
-        );
-    }
-
     const { data, setData, processing, post, errors, transform, reset } =
         useForm({
             email: "",
             password: "",
             remember: "",
         });
+    async function RedirectSignIn(event: React.MouseEvent<HTMLButtonElement>) {
+        const fetchUid = await GetUidFromGoogle();
+        if (fetchUid === null) {
+            alert("Your account is not authorized to log in");
+            return;
+        }
+
+        router.post(route("firebase.login"), {
+            uid: fetchUid,
+        });
+    }
 
     function handleSubmit(e: FormEvent): void {
         e.preventDefault();

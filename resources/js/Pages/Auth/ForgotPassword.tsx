@@ -6,7 +6,6 @@ import LoadingButton from "@/Components/LoadingButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function ForgotPassword() {
-    const { success } = usePage().props;
     const { data, setData, processing, post, errors, reset } = useForm({
         email: "",
     });
@@ -24,13 +23,6 @@ export default function ForgotPassword() {
                 <title>Forgot Password</title>
             </Head>
             <main className="bg-white min-h-[100vh] w-full flex justify-center items-center">
-                {success != null && (
-                    <div className="toast toast-top toast-center">
-                        <div className="alert alert-info">
-                            <span>{success}</span>
-                        </div>
-                    </div>
-                )}
                 <form
                     onSubmit={handleSubmit}
                     className="xl:w-96 fade-in-early md:72 xl:rounded-lg space-y-4 bg-secondary xl:p-10 md:p-6 p-3 h-fit w-full mx-2 md:mx-0 flex flex-col items-center"

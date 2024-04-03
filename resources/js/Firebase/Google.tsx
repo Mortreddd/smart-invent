@@ -1,6 +1,26 @@
-import { getAuth, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
+import { useForm } from "@inertiajs/react";
 import app from "./Config";
 
-export const authenticated = getAuth(app);
+import {
+    getAuth,
+    GoogleAuthProvider,
+    browserPopupRedirectResolver,
+    signInWithPopup,
+} from "firebase/auth";
 
-export async function EmailExists() {}
+export const authenticated = getAuth(app);
+export async function GetUidFromGoogle() {
+    try {
+        const result = await signInWithPopup(
+            authenticated,
+            new GoogleAuthProvider(),
+            browserPopupRedirectResolver
+        );
+
+        const user = result.user;
+        return user.uid;
+    } catch (FirebaseError) {
+        console.log(FirebaseError);
+        return null;
+    }
+}
