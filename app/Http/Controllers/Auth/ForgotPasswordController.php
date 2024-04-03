@@ -19,9 +19,9 @@ class ForgotPasswordController extends Controller
     public function verify(ForgotPasswordRequest $request)
     {
        
-        ForgotPasswordEvent::dispatch($request->only('email'));
+        ForgotPasswordEvent::dispatch($request->email);
 
-        
-        
+        Redirect::back()->with(['success' => 'Email was sent successfully']);
+
     }
 }

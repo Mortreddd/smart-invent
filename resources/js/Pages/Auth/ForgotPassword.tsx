@@ -4,7 +4,6 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import { ChangeEvent, FormEvent } from "react";
 import LoadingButton from "@/Components/LoadingButton";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInputError from "@/Components/TextInputError";
 
 export default function ForgotPassword() {
     const { success } = usePage().props;
@@ -28,7 +27,7 @@ export default function ForgotPassword() {
                 {success != null && (
                     <div className="toast toast-top toast-center">
                         <div className="alert alert-info">
-                            <span>New mail arrived.</span>
+                            <span>{success}</span>
                         </div>
                     </div>
                 )}
@@ -51,23 +50,35 @@ export default function ForgotPassword() {
                             Enter your email to reset your password
                         </p>
                     </div>
+                    {errors.email && (
+                        <div className="w-full">
+                            <div role="alert" className="alert alert-error">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="stroke-current shrink-0 h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                                <span>{errors.email}</span>
+                            </div>
+                        </div>
+                    )}
                     <div className="w-full py-2 space-y-2">
-                        {errors.email === null ? (
-                            <TextInputError
-                                type={"email"}
-                                value={data.email}
-                                placeholder={"example@dummy.com"}
-                            />
-                        ) : (
-                            <InputText
-                                type={"email"}
-                                placeholder={"example@dummy.com"}
-                                value={data.email}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                    setData({ ...data, email: e.target.value })
-                                }
-                            />
-                        )}
+                        <InputText
+                            type={"email"}
+                            placeholder={"example@dummy.com"}
+                            value={data.email}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setData({ ...data, email: e.target.value })
+                            }
+                        />
                     </div>
                     {processing ? (
                         <LoadingButton />
