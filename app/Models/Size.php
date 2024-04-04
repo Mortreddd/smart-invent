@@ -18,4 +18,9 @@ class Size extends Model
     protected $casts = [
         'created_at' => 'datetime'
     ];
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
+    }
 }

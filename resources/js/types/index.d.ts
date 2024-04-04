@@ -30,3 +30,5 @@ export type PageProps<
         user: User;
     };
 };
+
+export type CrossOrigin = "anonymous" | "use-credentials" | "" | undefined;

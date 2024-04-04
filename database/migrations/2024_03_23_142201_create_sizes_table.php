@@ -29,6 +29,7 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Size::class)->nullable()->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->float('earned');
             $table->timestamps();

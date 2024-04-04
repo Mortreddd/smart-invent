@@ -1,7 +1,7 @@
 import { Head, useForm, router } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputText from "@/Components/InputText";
-import { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { GetUidFromGoogle } from "@/Firebase/Google";
 import LoadingButton from "@/Components/LoadingButton";
@@ -37,7 +37,7 @@ export default function Login() {
         });
     }
     return (
-        <>
+        <React.Fragment>
             <Head>
                 <title>Login</title>
             </Head>
@@ -166,6 +166,6 @@ export default function Login() {
                     </div>
                 </div>
             </main>
-        </>
+        </React.Fragment>
     );
 }

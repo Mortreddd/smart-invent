@@ -14,13 +14,21 @@ export default {
             {
                 mytheme: {
                     primary: "#10b981",
+
                     secondary: "#a7f3d0",
+
                     accent: "#007bff",
+
                     neutral: "#111827",
+
                     "base-100": "#d1fae5",
+
                     info: "#00ecff",
+
                     success: "#6ee7b7",
+
                     warning: "#f59e0b",
+
                     error: "#dc2626",
                 },
             },
@@ -39,6 +47,9 @@ export default {
             },
             backgroundImage: {
                 login: "url('./images/login_bg.png')",
+            },
+            gridTemplateRows: {
+                16: "repeat(16, minmax(0, 1fr))",
             },
         },
     },

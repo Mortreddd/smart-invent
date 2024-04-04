@@ -2,7 +2,7 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputText from "@/Components/InputText";
 import TextInputError from "@/Components/TextInputError";
 import { Head, useForm, usePage } from "@inertiajs/react";
-import { FormEvent, ChangeEvent } from "react";
+import React, { FormEvent, ChangeEvent } from "react";
 import LoadingButton from "@/Components/LoadingButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 
@@ -22,7 +22,7 @@ export default function ResetPassword() {
         });
     }
     return (
-        <>
+        <React.Fragment>
             <Head>
                 <title>Reset Password</title>
             </Head>
@@ -112,6 +112,6 @@ export default function ResetPassword() {
                     )}
                 </form>
             </main>
-        </>
+        </React.Fragment>
     );
 }

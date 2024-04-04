@@ -1,7 +1,7 @@
 import InputText from "@/Components/InputText";
 import { useForm, Head, Link, usePage } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
-import { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import LoadingButton from "@/Components/LoadingButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
         });
     }
     return (
-        <>
+        <React.Fragment>
             <Head>
                 <title>Forgot Password</title>
             </Head>
@@ -105,6 +105,6 @@ export default function ForgotPassword() {
                     </div>
                 </form>
             </main>
-        </>
+        </React.Fragment>
     );
 }

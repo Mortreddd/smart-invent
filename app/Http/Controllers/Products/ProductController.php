@@ -24,18 +24,21 @@ class ProductController extends Controller
 
     public function store(CreateProductRequest $request)
     {
+        if(!$request->hasFile('image')){
+            return Redirect::back()->with('error', 'Image is required');
+        }
         
-        $productPath = 'products/'.Str::random(16);
-        Storage::disk('public')->put($productPath, $request->file('image'));
+        $fileName  = 'products/'.Str::random(16).$request->file('image')->extension();
+        $request->file('image')->storeAs('public/products', $fileName);
         $product = Product::create([
             'name' => $request->name,
-            'image' => $productPath,
+            'image' => $fileName,
         ]);
-
-        return Redirect::route('products.index');
+        
+        return Redirect::route('products.index')->with(['success' => 'Successfully created product']);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
         //
     }

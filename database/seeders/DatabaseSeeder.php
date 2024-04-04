@@ -301,8 +301,10 @@ class DatabaseSeeder extends Seeder
             $product = Product::find(rand(1, $products->count()));
             $quantity = rand(1, 5);
             $stock = Stock::where('product_id', $product->id)->first();
+            
             Sale::create([
                 'product_id' => $product->id,
+                'size_id' => in_array($product->id, [1, 4]) ? rand(1, 4) : null,
                 'quantity' => $quantity,
                 'earned' => $stock->price * $quantity,
                 'created_at' => fake()->dateTimeBetween('-2 years', 'now'),
