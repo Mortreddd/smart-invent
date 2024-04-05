@@ -40,7 +40,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Size::class)->nullable()->constrained()->cascadeOnDelete();
             $table->integer('stock')->default(0);
-            $table->float('price');
+            $table->float('price')->default(0);
             $table->timestamps();
         });
     }

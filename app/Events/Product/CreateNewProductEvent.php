@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Events\StockBroker;
+namespace App\Events\Product;
 
-use App\Models\Sale;
+use App\Models\Product;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OutOfProductStockEvent
+class CreateNewProductEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,7 +19,7 @@ class OutOfProductStockEvent
      * Create a new event instance.
      */
     public function __construct(
-        public Sale $sale
+        public Product $product
     ){}
 
     /**

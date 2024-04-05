@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Employee;
+use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Fabric;
 use App\Models\Sale;
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
                 'middle_name' => 'M',
                 'last_name' => 'Male',
                 'role' => 'Admin',
+                'image' => 'avatars/sample-image.jpg',
                 'gender' => 'M',
                 'email' => 'emmanmale@gmail.com',
                 'password' => Hash::make('emmanuelmale25'),
@@ -238,7 +240,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 4,
                 'price' => 65.00,
                 'created_at' => now(),
-                'updated_at' => now()  
+                'updated_at' => null  
             ],
             [
                 'course_id' => 1,
@@ -247,7 +249,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 6,
                 'price' => 70.00,
                 'created_at' => now(),
-                'updated_at' => now()  
+                'updated_at' => null  
             ],
             [
                 'course_id' => 2,
@@ -256,7 +258,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 1,
                 'price' => 70.00,
                 'created_at' => now(),
-                'updated_at' => now()  
+                'updated_at' => null  
             ],
             [
                 'course_id' => 2,
@@ -265,7 +267,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 4,
                 'price' => 65.00,
                 'created_at' => now(),
-                'updated_at' => now()  
+                'updated_at' => null  
             ],
             [
                 'course_id' => 3,
@@ -274,7 +276,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 9,
                 'price' => 60.00,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => null
             ],
             [
                 'course_id' => 4,
@@ -283,7 +285,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 3,
                 'price' => 70.00,
                 'created_at' => now(),
-                'updated_at' => now()  
+                'updated_at' => null  
             ],
             [
                 'course_id' => 5,
@@ -292,11 +294,23 @@ class DatabaseSeeder extends Seeder
                 'stock' => 4,
                 'price' => 70.00,
                 'created_at' => now(),
-                'updated_at' => now()  
+                'updated_at' => null  
             ],
         )
         ->create();
         $products = Product::all();
+        for($i = 1; $i <= 3000; $i++){
+            $fabric = Fabric::find(rand(1, 7));
+            $randomQuantity = rand(3, 15);
+            Expense::create([
+                'fabric_id' => $fabric->id,
+                'textile' => $fabric->textile,
+                'quantity' => $randomQuantity,
+                'price' => $fabric->price * $randomQuantity,
+                'created_at' => fake()->dateTimeBetween('-2 years', 'now'),
+                'updated_at' => null
+            ]);
+        }
         for($i = 1; $i <= 10000; $i++){
             $product = Product::find(rand(1, $products->count()));
             $quantity = rand(1, 5);

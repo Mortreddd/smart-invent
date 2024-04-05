@@ -5,33 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fabric extends Model
+class Expense extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'course_id',
+        'fabric_id',
         'textile',
-        'image',
-        'stock',
+        'quantity',
         'price',
         'created_at',
         'updated_at',
-        'log_id'
+        'log_id',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
-        'updated_at' => 'datetime'
+        'updated_at' => 'datetime',
     ];
 
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
 
-    public function product()
+    public function fabric()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Fabric::class);
     }
+    
 }

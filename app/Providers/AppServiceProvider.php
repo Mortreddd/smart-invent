@@ -3,12 +3,13 @@
 namespace App\Providers;
 
 use App\Events\ForgotPasswordEvent;
+use App\Events\Product\CreateNewProductEvent;
 use App\Events\StockBroker\OutOfProductStockEvent;
 use App\Listeners\ProcessForgotPasswordListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use App\Listeners\StockBroker\ProcessOutOfProductStockListener;
-use Inertia\Inertia;
+use App\Listeners\Product\ProcessCreateNewProductListener;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
             ProcessOutOfProductStockListener::class
         );
 
+        Event::listen(
+            CreateNewProductEvent::class,
+            ProcessCreateNewProductListener::class
+        );
     }
 }

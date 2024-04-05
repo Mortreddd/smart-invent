@@ -32,6 +32,7 @@ class MailResetPassword extends Mailable
         return new Envelope(
             from: new Address("emmanmale@gmail.com", "Smart Invent"),
             subject: 'Reset Password Notification',
+            to: [$this->email]
         );
     }
 

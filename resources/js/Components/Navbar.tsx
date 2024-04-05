@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
-
+import { Link, usePage } from "@inertiajs/react";
+import avatar from "@/Images/avatars/sample-image.jpg";
+import { Employee } from "@/types";
 export default function Navbar() {
+    const { auth } = usePage().props;
+    const { user } = auth as { user: Employee };
     return (
         <React.Fragment>
-            <div className="navbar bg-primary px-8">
+            <div className="navbar shadow-lg bg-primary px-8 ">
                 <div className="flex-1">
                     <label
                         htmlFor="my-drawer"
@@ -48,14 +51,15 @@ export default function Navbar() {
                         >
                             <div className="w-10 rounded-full">
                                 <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                                    alt={user.first_name}
+                                    src={`images/${user.image}`}
+                                    className="border object-cover"
                                 />
                             </div>
                         </div>
                         <ul
                             tabIndex={0}
-                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-gray-50 rounded-box w-52"
                         >
                             <li>
                                 <a className="justify-between">
@@ -70,6 +74,7 @@ export default function Navbar() {
                                 <Link
                                     href={route("logout")}
                                     method="post"
+                                    as="button"
                                     className="text-black hover:text-white transition-colors duration-200 ease-in-out bg-whtie hover:bg-red-500"
                                 >
                                     Logout

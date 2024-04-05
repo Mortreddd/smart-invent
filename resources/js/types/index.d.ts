@@ -13,14 +13,15 @@
 
 export interface User {
     id: number;
-    firstName: string;
-    middleName: string;
-    lastName: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    image: string;
     gender: string;
     email: string;
-    createdAt: number;
-    updatedAt: number;
-    logId?: number;
+    created_at: EpochTimeStamp;
+    updated_at: EpochTimeStamp;
+    log_id?: number;
 }
 
 export type PageProps<
@@ -31,4 +32,15 @@ export type PageProps<
     };
 };
 
-export type CrossOrigin = "anonymous" | "use-credentials" | "" | undefined;
+export interface Employee {
+    id: number;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    image: string;
+    gender: string;
+    email: string;
+    created_at: EpochTimeStamp;
+    updated_at: EpochTimeStamp;
+    log_id?: number;
+}

@@ -33,5 +33,10 @@ class Sale extends Model
         return Carbon::parse($this->creaetd_at)->week;
     }
 
-    
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+ 
+
 }
