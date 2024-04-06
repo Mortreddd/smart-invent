@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts";
 import LoadingTable from "../LoadingTable";
-import { ConvertIntoMonth } from "../Utils/FormatDate";
+import { ConvertIntoMonth } from "../../Utils/FormatDate";
 import { OverAllSalesProps } from "@/types/hooks/fetch";
 
 export default function YearlySalesChart() {
@@ -21,7 +21,7 @@ export default function YearlySalesChart() {
                 setSales(data.data);
             })
             .catch((error) => {
-                setLoading(false);
+                setLoading(true);
                 throw new Error(error);
             });
     }
@@ -37,7 +37,7 @@ export default function YearlySalesChart() {
     });
     return (
         <React.Fragment>
-            {loading ? (
+            {loading && !sales ? (
                 <LoadingTable />
             ) : (
                 <div className="text-black">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useTransition } from "react";
 import { Expense, Fabric } from "@/types/models";
 import LoadingTable from "../LoadingTable";
-import { MonthNameDayYear } from "../Utils/FormatDate";
+import { MonthNameDayYear } from "../../Utils/FormatDate";
 interface LinkProps {
     first: string;
     last: string;

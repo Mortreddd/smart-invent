@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts";
-import { ConvertIntoMonth } from "../Utils/FormatDate";
+import { ConvertIntoMonth } from "../../Utils/FormatDate";
 import LoadingTable from "../LoadingTable";
 import { OverAllExpensesProps } from "@/types/hooks/fetch";
 export default function YearlyExpensesChart() {

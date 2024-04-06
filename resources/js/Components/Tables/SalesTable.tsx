@@ -1,7 +1,7 @@
 import { Sale } from "@/types/models";
 import React, { useTransition, useState, useEffect } from "react";
 import LoadingTable from "../LoadingTable";
-import { MonthNameDayYear } from "../Utils/FormatDate";
+import { MonthNameDayYear } from "../../Utils/FormatDate";
 // interface FilterProps {
 //     name?: string;
 //     asc?: boolean;

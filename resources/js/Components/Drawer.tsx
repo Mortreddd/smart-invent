@@ -30,7 +30,7 @@ export default function Drawer({
                         </div>
                         <li>
                             <Link
-                                href=""
+                                href={route("home")}
                                 className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
                                     current === "Dashboard"
                                         ? "activeTab"
@@ -56,8 +56,12 @@ export default function Drawer({
                         </li>
                         <li>
                             <Link
-                                href=""
-                                className={`flex items-center justify-start gap-3 hover:text-primary transition-colors ease-in-out duration-200 text-black`}
+                                href={route("products.index")}
+                                className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
+                                    current === "Products"
+                                        ? "activeTab"
+                                        : "inactiveTab"
+                                }`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +80,11 @@ export default function Drawer({
                         <li>
                             <Link
                                 href=""
-                                className={`flex items-center justify-start gap-3 hover:text-primary transition-colors ease-in-out duration-200 text-black`}
+                                className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
+                                    current === "Sales"
+                                        ? "activeTab"
+                                        : "inactiveTab"
+                                }`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +106,11 @@ export default function Drawer({
                         <li>
                             <Link
                                 href=""
-                                className={`flex items-center justify-start gap-3 hover:text-primary transition-colors ease-in-out duration-200 text-black`}
+                                className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
+                                    current === "Employees"
+                                        ? "activeTab"
+                                        : "inactiveTab"
+                                }`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +132,11 @@ export default function Drawer({
                         <li>
                             <Link
                                 href=""
-                                className={`flex items-center justify-start gap-3 hover:text-primary transition-colors ease-in-out duration-200 text-black`}
+                                className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
+                                    current === "Expenses"
+                                        ? "activeTab"
+                                        : "inactiveTab"
+                                }`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
