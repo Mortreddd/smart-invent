@@ -1,10 +1,14 @@
-import { usePage, Head, Link } from "@inertiajs/react";
+import { usePage, Head } from "@inertiajs/react";
 import Navbar from "@/Components/Navbar";
 import Drawer from "@/Components/Drawer";
 import React from "react";
-import MonthlyExpenseLineChart from "@/Components/Tables/RecentExpensesTable";
 import { PageProps } from "@/types";
-import RecentSalesTable from "@/Components/Tables/RecentSalesTable";
+import YearlySalesChart from "@/Components/Charts/YearlySalesChart";
+import YearlyExpensesChart from "@/Components/Charts/YearlyExpensesChart";
+import { OverAllSalesProps, OverAllExpensesProps } from "@/types/hooks/fetch";
+import { LineChart } from "@mui/x-charts";
+import { ConvertIntoMonth } from "@/Components/Utils/FormatDate";
+
 export default function Dashboard() {
     interface DashboardProps extends PageProps {
         income: number;
@@ -15,7 +19,29 @@ export default function Dashboard() {
     // &#8369; is the HTML entity for the Philippine Peso sign
     const { income, expense, profit, monthlyExpense } =
         usePage<DashboardProps>().props;
+
+    const { expenses, sales } = usePage<{
+        expenses: OverAllExpensesProps[];
+        sales: OverAllSalesProps[];
+    }>().props;
+
     const formatter = new Intl.NumberFormat("en-US");
+
+    const x = sales.map((sale: OverAllSalesProps) => {
+        return ConvertIntoMonth(sale.month);
+    });
+    const monthlySalesData = sales.map((sale: OverAllSalesProps) => {
+        return sale.total_earned;
+    });
+    const monthlyExpensesData = expenses.map((sale: OverAllExpensesProps) => {
+        return sale.total_expense;
+    });
+    const monthlyProfitData = expenses.map(
+        (expense: OverAllExpensesProps, index: number) => {
+            return sales[index].total_earned - expense.total_expense;
+        }
+    );
+
     return (
         <React.Fragment>
             <Head>
@@ -138,15 +164,47 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-4 w-full row-span-6 grid-flow-col grid gap-5">
-                            <div className="col-span-2 max-w-50 min-w-100 min-h-64 max-h-72 overflow-y-scroll shadow-lg bg-gray-100 row-span-6">
-                                <RecentSalesTable />
+                        <div className="col-span-4 w-full row-span-5 grid-flow-col grid gap-5">
+                            <div className="col-span-2 min-w-[45vw] min-h-64 max-h-72 shadow-lg bg-gray-100 row-span-6">
+                                <YearlySalesChart />
                             </div>
-                            <div className="col-span-2 max-w-50 min-w-100 min-h-64 max-h-72 overflow-y-scroll shadow-lg bg-gray-100 row-span-6">
-                                <MonthlyExpenseLineChart />
+                            <div className="col-span-2 min-w-[47vw] min-h-64 max-h-72 shadow-lg bg-gray-100 row-span-6">
+                                <YearlyExpensesChart />
                             </div>
                         </div>
-                        <div className="grid col-span-4 shadow-lg bg-gray-100 row-span-7 gap-5 h-full"></div>
+                        <div className="grid fade-in col-span-4 shadow-lg bg-gray-100 row-span-8 gap-5 h-full">
+                            <LineChart
+                                title="Overall Sales This Year"
+                                xAxis={[{ data: x, scaleType: "point" }]}
+                                series={[
+                                    {
+                                        data: monthlySalesData,
+                                        color: "#6a9fe6",
+                                        label: "Monthly Sales",
+                                        stack: "total",
+                                        area: true,
+                                    },
+                                    {
+                                        data: monthlyProfitData,
+                                        color: "#90db72",
+                                        label: "Monthly Profits",
+                                        stack: "total",
+                                        area: true,
+                                    },
+                                    {
+                                        data: monthlyExpensesData,
+                                        color: "#d12b26",
+                                        label: "Monthly Expenses",
+                                        stack: "total",
+                                        area: true,
+                                    },
+                                ]}
+                                height={500}
+                                margin={{
+                                    left: 100,
+                                }}
+                            />
+                        </div>
                     </section>
                 </Drawer>
             </main>

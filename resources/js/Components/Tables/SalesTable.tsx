@@ -1,38 +1,30 @@
-import React, { useEffect, useState, useTransition } from "react";
-import { Expense, Fabric } from "@/types/models";
+import { Sale } from "@/types/models";
+import React, { useTransition, useState, useEffect } from "react";
 import LoadingTable from "../LoadingTable";
 import { MonthNameDayYear } from "../Utils/FormatDate";
-interface LinkProps {
-    first: string;
-    last: string;
-    prev: null | string;
-    next: null | string;
-}
-export default function MonthlyExpenseLineChart() {
-    const [expenses, setExpenses] = useState<Expense<Fabric>[]>([]);
-    const [links, setLinks] = useState<LinkProps>();
-    const [isLoading, startFetching] = useTransition();
-
+// interface FilterProps {
+//     name?: string;
+//     asc?: boolean;
+// }
+export default function OverallSalesChart() {
+    const [sales, setSales] = useState<Sale[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-        startFetching(() => {
-            const fetchExpenses = async () => {
-                const result = await fetch(route("expenses.api.index"), {
-                    headers: {
-                        Accept: "application/json",
-                    },
-                });
+        async function fetchSales() {
+            setIsLoading(true);
+            const result = await fetch(route("sales.api.index"), {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                },
+            });
 
-                const data = await result.json();
-                const expenses: Expense<Fabric>[] = data.data;
-                const links: LinkProps = data.links;
-                setLinks(links);
-                setExpenses(expenses);
-            };
-            fetchExpenses();
-        });
+            const data = await result.json();
+            setSales(data.data);
+            setIsLoading(false);
+        }
+        fetchSales();
     }, []);
-
-    console.log(expenses);
     return (
         <React.Fragment>
             {isLoading ? (
@@ -42,7 +34,7 @@ export default function MonthlyExpenseLineChart() {
                     <div className="py-3 w-full">
                         <div className="w-full items-center flex  px-3 justify-between">
                             <h3 className="text-lg font-bold text-text-gray-800">
-                                Recent Expense
+                                Recent Sales
                             </h3>
                             <div className="dropdown dropdown-end">
                                 <div
@@ -79,17 +71,17 @@ export default function MonthlyExpenseLineChart() {
                             </div>
                         </div>
                     </div>
-                    <table className="table-auto table">
-                        <thead>
+                    <table className="table-fixed table">
+                        <thead className="">
                             <tr>
                                 <th className="text-sm border-solid border-2 border-gray-400">
-                                    Fabric
+                                    Product
                                 </th>
                                 <th className="text-sm border-solid border-2 border-gray-400">
                                     Quantity
                                 </th>
                                 <th className="text-sm border-solid border-2 border-gray-400">
-                                    Price
+                                    Earning
                                 </th>
                                 <th className="text-sm border-solid border-2 border-gray-400">
                                     Date
@@ -97,38 +89,57 @@ export default function MonthlyExpenseLineChart() {
                             </tr>
                         </thead>
                         <tbody>
-                            {expenses.map(
-                                (expense: Expense<Fabric>, index: number) => (
+                            {sales ? (
+                                sales.map((sale: Sale, index: number) => (
                                     <tr
                                         key={index}
-                                        className="hover transition-colors duration-200 ease-in-out"
+                                        className="hover:bg-gray-200 transition-colors duration-200 ease-in-out"
                                     >
-                                        <td>
+                                        <td className="border-solid border-2 border-gray-200">
                                             <div className="flex items-center gap-3">
                                                 <div className="avatar">
                                                     <div className="mask mask-squircle w-12 h-12">
                                                         <img
-                                                            src={`images/${expense.fabric?.image}`}
+                                                            src={`images/${sale.product?.image}`}
                                                             alt="Avatar Tailwind CSS Component"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div className="font-bold">
-                                                        {expense.textile}
+                                                        {`${
+                                                            sale.product?.name
+                                                        }${
+                                                            sale.size?.name ===
+                                                            undefined
+                                                                ? ""
+                                                                : `(${sale.size?.name})`
+                                                        }`}
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{expense.quantity}</td>
-                                        <td>{expense.price}</td>
-                                        <td>
-                                            {MonthNameDayYear(
-                                                expense.created_at
-                                            )}
+                                        <td className="border-solid border-2 border-gray-200">
+                                            {sale.quantity}
+                                        </td>
+                                        <td className="border-solid border-2 border-gray-200">
+                                            {sale.earned}
+                                        </td>
+                                        <td className="border-solid border-2 border-gray-200">
+                                            {MonthNameDayYear(sale.created_at)}
                                         </td>
                                     </tr>
-                                )
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        colSpan={4}
+                                        rowSpan={2}
+                                        className="h-32 flex text-gray-700 items-center justify-center"
+                                    >
+                                        No Current Sales
+                                    </td>
+                                </tr>
                             )}
                         </tbody>
                     </table>

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .inactiveTab {
+        @apply hover:text-primary  text-black;
+    }
+    .activeTab {
+        @apply text-primary hover:text-primary/80;
+    }
+}
+
 @layer utilities {
     .fade-in {
         animation: fadeInAnimation ease-in 0.9s;

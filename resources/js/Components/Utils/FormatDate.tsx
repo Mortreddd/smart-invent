@@ -25,3 +25,7 @@ export function MonthNameDayYear(timestamp: number): string {
 
     return formattedDate;
 }
+
+export function ConvertIntoMonth(month: number): string {
+    return MONTHNAMES[month - 1];
+}

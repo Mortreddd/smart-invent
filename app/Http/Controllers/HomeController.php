@@ -6,22 +6,32 @@ use App\Models\Expense;
 use App\Models\Sale;
 use App\Models\Product;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function __invoke()
     {
-        $sales = Sale::with(['product'])->latest()->limit(10)->get();
         $products = Product::withSum('sales', 'earned')->groupBy('id')->get();
         $expense = Expense::sum('price');
         $income = Sale::sum('earned');
         $profit = $income - $expense;
         $monthlyExpense = Expense::groupByRaw('MONTH(created_at)')->sum('price');
-        
+        $expenses = Expense::select(DB::raw('SUM(price) as total_expense'), DB::raw("MONTH(created_at) AS month"), DB::raw('YEAR(created_at) as year'))
+                ->whereBetween('created_at', [now()->subYear(), now()])
+                ->groupByRaw('MONTH(created_at), YEAR(created_at)')
+                ->orderByRaw('MONTH(created_at), YEAR(created_at)')
+                ->get();
+
+        $sales = Sale::select(DB::raw('SUM(earned) as total_earned'), DB::raw("MONTH(created_at) AS month"), DB::raw('YEAR(created_at) as year'))
+                ->whereBetween('created_at', [now()->subYear(), now()])
+                ->groupByRaw('MONTH(created_at), YEAR(created_at)')
+                ->orderByRaw('MONTH(created_at), YEAR(created_at)')
+                ->get();
         // dd($monthLyExpenseData);
-        return Inertia::render('Dashboard', compact(
-            'sales', 'products', 'income', 'expense', 'profit', 'monthlyExpense'
-        ));
+        return Inertia::render('Dashboard', compact([
+            'products', 'sales', 'expenses', 'income', 'expense', 'profit', 'monthlyExpense'
+        ]));
 
     }
 }

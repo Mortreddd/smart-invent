@@ -49,6 +49,7 @@ export default {
                 login: "url('./images/login_bg.png')",
             },
             gridTemplateRows: {
+                15: "repeat(16, minmax(0, 1fr))",
                 16: "repeat(16, minmax(0, 1fr))",
             },
         },

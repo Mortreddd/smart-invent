@@ -1,29 +1,35 @@
-import { Sale } from "@/types/models";
-import React, { useTransition, useState, useEffect } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+import { Expense, Fabric } from "@/types/models";
 import LoadingTable from "../LoadingTable";
 import { MonthNameDayYear } from "../Utils/FormatDate";
-// interface FilterProps {
-//     name?: string;
-//     asc?: boolean;
-// }
-export default function RecentSalesTable() {
-    const [sales, setSales] = useState<Sale[]>([]);
-    const [isLoading, startFetching] = useTransition();
-    useEffect(() => {
-        startFetching(() => {
-            async function fetchSales() {
-                const result = await fetch(route("sales.api.index"), {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/json",
-                    },
-                });
+interface LinkProps {
+    first: string;
+    last: string;
+    prev: null | string;
+    next: null | string;
+}
+export default function OverallExpenseChart() {
+    const [expenses, setExpenses] = useState<Expense<Fabric>[]>([]);
+    const [links, setLinks] = useState<LinkProps>();
+    const [isLoading, setIsLoading] = useState<boolean>();
 
-                const data = await result.json();
-                setSales(data.data);
-            }
-            fetchSales();
-        });
+    useEffect(() => {
+        const fetchExpenses = async () => {
+            setIsLoading(true);
+            const result = await fetch(route("expenses.api.index"), {
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+
+            const data = await result.json();
+            const expenses: Expense<Fabric>[] = data.data;
+            const links: LinkProps = data.links;
+            setLinks(links);
+            setExpenses(expenses);
+            setIsLoading(false);
+        };
+        fetchExpenses();
     }, []);
     return (
         <React.Fragment>
@@ -34,7 +40,7 @@ export default function RecentSalesTable() {
                     <div className="py-3 w-full">
                         <div className="w-full items-center flex  px-3 justify-between">
                             <h3 className="text-lg font-bold text-text-gray-800">
-                                Recent Sales
+                                Recent Expense
                             </h3>
                             <div className="dropdown dropdown-end">
                                 <div
@@ -71,17 +77,17 @@ export default function RecentSalesTable() {
                             </div>
                         </div>
                     </div>
-                    <table className="table-auto table">
-                        <thead className="">
+                    <table className="table-fixed table">
+                        <thead>
                             <tr>
                                 <th className="text-sm border-solid border-2 border-gray-400">
-                                    Product
+                                    Fabric
                                 </th>
                                 <th className="text-sm border-solid border-2 border-gray-400">
                                     Quantity
                                 </th>
                                 <th className="text-sm border-solid border-2 border-gray-400">
-                                    Earning
+                                    Price
                                 </th>
                                 <th className="text-sm border-solid border-2 border-gray-400">
                                     Date
@@ -89,44 +95,39 @@ export default function RecentSalesTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {sales.map((sale: Sale, index: number) => (
-                                <tr
-                                    key={index}
-                                    className="hover:bg-gray-200 transition-colors duration-200 ease-in-out"
-                                >
-                                    <td className="border-solid border-2 border-gray-200">
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img
-                                                        src={`images/${sale.product?.image}`}
-                                                        alt="Avatar Tailwind CSS Component"
-                                                    />
+                            {expenses.map(
+                                (expense: Expense<Fabric>, index: number) => (
+                                    <tr
+                                        key={index}
+                                        className="hover transition-colors duration-200 ease-in-out"
+                                    >
+                                        <td>
+                                            <div className="flex items-center gap-3">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle w-12 h-12">
+                                                        <img
+                                                            src={`images/${expense.fabric?.image}`}
+                                                            alt="Avatar Tailwind CSS Component"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold">
+                                                        {expense.textile}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div className="font-bold">
-                                                    {`${sale.product?.name}${
-                                                        sale.size?.name ===
-                                                        undefined
-                                                            ? ""
-                                                            : `(${sale.size?.name})`
-                                                    }`}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="border-solid border-2 border-gray-200">
-                                        {sale.quantity}
-                                    </td>
-                                    <td className="border-solid border-2 border-gray-200">
-                                        {sale.earned}
-                                    </td>
-                                    <td className="border-solid border-2 border-gray-200">
-                                        {MonthNameDayYear(sale.created_at)}
-                                    </td>
-                                </tr>
-                            ))}
+                                        </td>
+                                        <td>{expense.quantity}</td>
+                                        <td>{expense.price}</td>
+                                        <td>
+                                            {MonthNameDayYear(
+                                                expense.created_at
+                                            )}
+                                        </td>
+                                    </tr>
+                                )
+                            )}
                         </tbody>
                     </table>
                 </div>
