@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\Fabric;
 use App\Models\Sale;
 use App\Models\Size;
+use App\Models\Category;
 
 
 class DatabaseSeeder extends Seeder
@@ -74,6 +75,21 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'XL',
             ],
+        )
+        ->create();
+        Category::factory()->count(4)->sequence(
+            [
+                'name' => 'Rent',
+            ],
+            [
+                'name' => 'Utilities',
+            ],
+            [
+                'name' => 'Salaries',
+            ],
+            [
+                'name' => 'Interest',
+            ]
         )
         ->create();
         Product::factory()->count(5)->sequence(
@@ -300,15 +316,10 @@ class DatabaseSeeder extends Seeder
         ->create();
         $products = Product::all();
         for($i = 1; $i <= 3000; $i++){
-            $fabric = Fabric::find(rand(1, 7));
-            $randomQuantity = rand(3, 15);
             Expense::create([
-                'fabric_id' => $fabric->id,
-                'textile' => $fabric->textile,
-                'quantity' => $randomQuantity,
-                'price' => $fabric->price * $randomQuantity,
-                'created_at' => fake()->dateTimeBetween('-2 years', 'now'),
-                'updated_at' => null
+                'category_id' => rand(1, Category::count()),
+                'amount' => rand(500, 1000),
+                'created_at' => fake()->dateTimeBetween('-1 years', 'now')
             ]);
         }
         for($i = 1; $i <= 10000; $i++){
@@ -321,7 +332,7 @@ class DatabaseSeeder extends Seeder
                 'size_id' => in_array($product->id, [1, 4]) ? rand(1, 4) : null,
                 'quantity' => $quantity,
                 'earned' => $stock->price * $quantity,
-                'created_at' => fake()->dateTimeBetween('-2 years', 'now'),
+                'created_at' => fake()->dateTimeBetween('-1 years', 'now'),
                 'updated_at' => now(),
             ]);
         }

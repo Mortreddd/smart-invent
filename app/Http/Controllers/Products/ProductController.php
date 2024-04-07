@@ -6,6 +6,7 @@ use App\Events\Product\CreateNewProductEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\CreateProductRequest;
 use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,11 @@ class ProductController extends Controller
 
     public function index()
     {
-        return Inertia::render('ProductsLayout');
+
+        return Inertia::render('ProductsLayout', [
+            'stocks' => Stock::with(['product', 'size'])
+                        ->get()
+        ]);
     }
 
 

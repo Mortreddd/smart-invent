@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Fabric;
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +14,8 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Fabric::class)->constrained()->cascadeOnDelete();
-            $table->enum('textile', ["Blouse", "Pants", "Skirt", "Any"]);
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
+            $table->decimal('amount', 10, 2);
             $table->timestamps();
             $table->foreignIdFor(App\Models\Log::class)->nullable()->constrained()->cascadeOnDelete();
         });

@@ -32,6 +32,7 @@ class Product extends Model
         return $this->hasMany(Sale::class);
     }
 
+
     public static function totalStockEachProduct()
     {
         return static::withSum('stocks', 'stock')->get();

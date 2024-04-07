@@ -10,10 +10,8 @@ class Expense extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fabric_id',
-        'textile',
-        'quantity',
-        'price',
+        'category_id',
+        'amount',
         'created_at',
         'updated_at',
         'log_id',
@@ -24,10 +22,5 @@ class Expense extends Model
         'updated_at' => 'datetime',
     ];
 
-
-    public function fabric()
-    {
-        return $this->belongsTo(Fabric::class);
-    }
     
 }

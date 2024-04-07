@@ -2,40 +2,20 @@ import React, { useEffect, useState, useTransition } from "react";
 import { Expense, Fabric } from "@/types/models";
 import LoadingTable from "../LoadingTable";
 import { MonthNameDayYear } from "../../Utils/FormatDate";
-interface LinkProps {
-    first: string;
-    last: string;
-    prev: null | string;
-    next: null | string;
-}
+import useFetch from "@/Hooks/useFetch";
+import ErrorTable from "../Errors/ErrorTable";
+
 export default function OverallExpenseChart() {
-    const [expenses, setExpenses] = useState<Expense<Fabric>[]>([]);
-    const [links, setLinks] = useState<LinkProps>();
-    const [isLoading, setIsLoading] = useState<boolean>();
+    const { data, isError, isLoading, links, meta } =
+        useFetch<Expense<Fabric>[]>("expenses.api.index");
 
-    useEffect(() => {
-        const fetchExpenses = async () => {
-            setIsLoading(true);
-            const result = await fetch(route("expenses.api.index"), {
-                headers: {
-                    Accept: "application/json",
-                },
-            });
-
-            const data = await result.json();
-            const expenses: Expense<Fabric>[] = data.data;
-            const links: LinkProps = data.links;
-            setLinks(links);
-            setExpenses(expenses);
-            setIsLoading(false);
-        };
-        fetchExpenses();
-    }, []);
+    const expenses: Expense<Fabric>[] | null = data;
+    const urls = links;
     return (
         <React.Fragment>
-            {isLoading ? (
-                <LoadingTable />
-            ) : (
+            {isLoading && <LoadingTable />}
+            {isError && <ErrorTable />}
+            {expenses && (
                 <div className="overflow-x-hidden fade-in-early">
                     <div className="py-3 w-full">
                         <div className="w-full items-center flex  px-3 justify-between">
@@ -95,7 +75,7 @@ export default function OverallExpenseChart() {
                             </tr>
                         </thead>
                         <tbody>
-                            {expenses.map(
+                            {expenses?.map(
                                 (expense: Expense<Fabric>, index: number) => (
                                     <tr
                                         key={index}

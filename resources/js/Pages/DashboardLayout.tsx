@@ -2,23 +2,30 @@ import { usePage, Head } from "@inertiajs/react";
 import Navbar from "@/Components/Navbar";
 import Drawer from "@/Components/Drawer";
 import React from "react";
-import { PageProps } from "@/types";
 import YearlySalesChart from "@/Components/Charts/YearlySalesChart";
 import YearlyExpensesChart from "@/Components/Charts/YearlyExpensesChart";
-import { OverAllSalesProps, OverAllExpensesProps } from "@/types/hooks/fetch";
 import { LineChart } from "@mui/x-charts";
 import { ConvertIntoMonth } from "@/Utils/FormatDate";
 
+interface OverAllSalesProps {
+    month: number;
+    year: number;
+    total_earned: number;
+}
+
+interface OverAllExpensesProps {
+    month: number;
+    year: number;
+    total_expense: number;
+}
 export default function DashboardLayout() {
-    interface DashboardProps extends PageProps {
+    // &#8369; is the HTML entity for the Philippine Peso sign
+    const { income, expense, profit, monthlyExpense } = usePage<{
         income: number;
         expense: number;
         profit: number;
         monthlyExpense: number;
-    }
-    // &#8369; is the HTML entity for the Philippine Peso sign
-    const { income, expense, profit, monthlyExpense } =
-        usePage<DashboardProps>().props;
+    }>().props;
 
     const { expenses, sales } = usePage<{
         expenses: OverAllExpensesProps[];
@@ -59,7 +66,7 @@ export default function DashboardLayout() {
                                 <div className="flex  px-6 py-3 justify-center h-full items-start flex-col">
                                     <div className="flex gap-2 items-center">
                                         <span className="rounded-full h-2 w-2 bg-blue-500"></span>
-                                        <h2 className="text-gray-500 text-md">
+                                        <h2 className="text-gray-600 text-lg">
                                             Total Income
                                         </h2>
                                     </div>
@@ -85,7 +92,7 @@ export default function DashboardLayout() {
                                 <div className="flex  px-6 py-3 justify-center h-full items-start flex-col">
                                     <div className="flex gap-2 items-center">
                                         <span className="rounded-full h-2 w-2 bg-red-500"></span>
-                                        <h2 className="text-gray-500 text-md">
+                                        <h2 className="text-gray-600 text-lg">
                                             Total Expense
                                         </h2>
                                     </div>
@@ -113,7 +120,7 @@ export default function DashboardLayout() {
                                 <div className="flex  px-6 py-3 justify-center h-full items-start flex-col">
                                     <div className="flex gap-2 items-center">
                                         <span className="rounded-full h-2 w-2 bg-green-500"></span>
-                                        <h2 className="text-gray-500 text-md">
+                                        <h2 className="text-gray-600 text-lg">
                                             Total Profit
                                         </h2>
                                     </div>
@@ -141,7 +148,7 @@ export default function DashboardLayout() {
                                 <div className="flex  px-6 py-3 justify-center h-full items-start flex-col">
                                     <div className="flex gap-2 items-center">
                                         <span className="rounded-full h-2 w-2 bg-orange-500"></span>
-                                        <h2 className="text-gray-500 text-md">
+                                        <h2 className="text-gray-600 text-lg">
                                             Monthly Expense
                                         </h2>
                                     </div>

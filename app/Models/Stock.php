@@ -26,11 +26,11 @@ class Stock extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return static::belongsTo(Product::class);
     }
 
     public function size()
     {
-        return $this->belongsTo(Size::class);
+        return static::belongsTo(Size::class);
     }
 }

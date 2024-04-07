@@ -43,17 +43,17 @@ export default function Navbar() {
                             className="input outline-none ring-0 border-0 w-24 md:w-auto"
                         />
                     </div>
-                    <div className="dropdown dropdown-end">
+                    <div className="dropdown dropdown-end hover:bg-blend-color-burn">
                         <div
                             tabIndex={0}
                             role="button"
-                            className="btn btn-ghost btn-circle avatar"
+                            className="rounded-full h-fit border-2 border-solid border-gray-300 overflow-hidden transition-colors duration-200 ease-in-out hover:border-gray-400"
                         >
                             <div className="w-10 rounded-full">
                                 <img
                                     alt={user.first_name}
                                     src={`images/${user.image}`}
-                                    className="border object-cover"
+                                    className="object-cover"
                                 />
                             </div>
                         </div>
