@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
 class Employee extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Authorizable, Notifiable, CanResetPassword, HasApiTokens;

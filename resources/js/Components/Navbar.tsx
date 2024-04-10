@@ -7,7 +7,7 @@ export default function Navbar() {
     const { user } = auth as { user: Employee };
     return (
         <React.Fragment>
-            <div className="navbar shadow-lg bg-primary px-8 ">
+            <div className="navbar shadow-lg bg-primary px-8 drop-shadow-xl">
                 <div className="flex-1">
                     <label
                         htmlFor="my-drawer"

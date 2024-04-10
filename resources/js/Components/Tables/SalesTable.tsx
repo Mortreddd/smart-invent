@@ -1,22 +1,42 @@
-import { Sale } from "@/types/models/sale";
-import React, { useTransition, useState, useEffect } from "react";
-import LoadingTable from "../LoadingTable";
-import { MonthNameDayYear } from "../../Utils/FormatDate";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Product } from "@/types/models/product";
-import { Size } from "@/types/models/size";
-import ErrorTable from "../Errors/ErrorTable";
 import { usePage } from "@inertiajs/react";
 import { Stock } from "@/types/models/stock";
 import Modal from "../Modal";
 import InputText from "../InputText";
-
-// const { isLoading, isError, data } =
-//     useFetch<Sale<Product, Size>>("sales.api.index");
-// const sales: Sale<Product, Size>[] | null = data;
+import AddProductForm from "../Forms/AddProductForm";
+import { Size } from "@/types/models/size";
 
 export default function SalesTables() {
-    const { stocks } = usePage<{ stocks: Stock<Product>[] | null }>().props;
+    const { stocks, sizes } = usePage<{
+        stocks: Array<Stock<Product>> | null;
+        sizes: Array<Size>;
+    }>().props;
+    const [filteredStocks, setFilteredStocks] = useState<Array<
+        Stock<Product>
+    > | null>(stocks);
     const [search, setSearch] = useState<string>("");
+
+    function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value.toLowerCase();
+        setSearch(value);
+        if (stocks) {
+            const filtered = stocks.filter((stock: Stock<Product>) =>
+                stock.product?.name.toLowerCase().includes(value)
+            );
+            setFilteredStocks(filtered);
+        }
+    }
+
+    useEffect(() => {
+        if (stocks) {
+            const filtered = stocks.filter((stock: Stock<Product>) =>
+                stock.product?.name.toLowerCase().includes(search)
+            );
+            setFilteredStocks(filtered);
+        }
+    }, [search, stocks]);
+
     return (
         <React.Fragment>
             {stocks && (
@@ -26,6 +46,7 @@ export default function SalesTables() {
                             <InputText
                                 type="text"
                                 value={search}
+                                onChange={handleSearch}
                                 placeholder={"Search..."}
                                 className="bg-white focus:ring-1 focus:ring-primary focus:outline-0"
                             />
@@ -66,32 +87,42 @@ export default function SalesTables() {
                         </label>
 
                         {/* Put this part before </body> tag */}
-                        <Modal>div.w-full.</Modal>
+                        <Modal>
+                            <AddProductForm sizes={sizes} />
+                        </Modal>
                     </div>
                     <div className="overflow-x-auto fade-in-early">
                         <table className="table table-auto">
                             {/* head */}
                             <thead>
-                                <tr
-                                    className={
-                                        " bg-primary divide-x-2 text-gray-50 text-lg"
-                                    }
-                                >
-                                    <th className="rounded-tl-xl"></th>
-                                    <th className="text-center" colSpan={2}>
+                                <tr className="bg-primary divide-x-2 text-gray-50 text-lg">
+                                    <th className="rounded-tl-xl text-center text-md font-semibold"></th>
+                                    <th
+                                        className="text-center text-md font-semibold"
+                                        colSpan={2}
+                                    >
                                         Product
                                     </th>
-                                    <th>Size</th>
-                                    <th>Unit Price</th>
-                                    <th>Stock</th>
-                                    <th className="rounded-tr-xl">
+                                    <th className="text-center text-md font-semibold">
+                                        Size
+                                    </th>
+                                    <th className="text-center text-md font-semibold">
+                                        Unit Price
+                                    </th>
+                                    <th className="text-center text-md font-semibold">
+                                        Stock
+                                    </th>
+                                    <th className="text-center text-md font-semibold">
                                         Total Amount
+                                    </th>
+                                    <th className="text-center text-md font-semibold rounded-tr-xl">
+                                        Actions
                                     </th>
                                 </tr>
                             </thead>
                             <tbody className="bg-gray-50">
                                 {/* row 1 */}
-                                {stocks.map(
+                                {filteredStocks?.map(
                                     (stock: Stock<Product>, index: number) => (
                                         <tr
                                             className="hover odd:bg-secondary"
@@ -111,20 +142,30 @@ export default function SalesTables() {
                                                     />
                                                 </div>
                                             </td>
-                                            <td className="text-center">
+                                            <td className="text-center text-md font-semibold">
                                                 {stock.product?.name}
                                             </td>
-                                            <td className="text-md">
+                                            <td className="text-md text-center font-semibold">
                                                 {stock.size?.name}
                                             </td>
-                                            <td className="text-md">
+                                            <td className="text-md text-center font-semibold">
                                                 {stock.price}
                                             </td>
-                                            <td className="text-md">
+                                            <td className="text-md text-center font-semibold">
                                                 {stock.stock}
                                             </td>
-                                            <td className="text-md">
+                                            <td className="text-md text-center font-semibold">
                                                 {stock.price * stock.stock}
+                                            </td>
+                                            <td>
+                                                <div className="flex justify-center gap-2">
+                                                    <button className="bg-amber-500 text-white hover:bg-amber-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2">
+                                                        Edit
+                                                    </button>
+                                                    <button className="bg-red-500 text-white hover:bg-red-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2">
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     )

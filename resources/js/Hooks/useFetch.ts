@@ -1,6 +1,5 @@
-import { set } from "firebase/database";
+import axios from "axios";
 import { useEffect, useState } from "react";
-
 interface LinkProps {
     first?: string;
     last?: string;
@@ -14,7 +13,7 @@ interface MetaProps {
     last_page?: number;
     links?: { url?: string; label?: string; active?: boolean }[];
 }
-export default function useFetch<T>(url: string) {
+export default function useFetch<T>({ url }: { url: string }) {
     const [data, setData] = useState<T[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
@@ -26,6 +25,7 @@ export default function useFetch<T>(url: string) {
             await fetch(route(url))
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data);
                     setData(data.data);
                     setLinks(data.links);
                     setMeta(data.meta);

@@ -28,7 +28,6 @@ class HomeController extends Controller
                 ->groupByRaw('MONTH(created_at), YEAR(created_at)')
                 ->orderByRaw('MONTH(created_at), YEAR(created_at)')
                 ->get();
-        // dd($monthLyExpenseData);
         return Inertia::render('DashboardLayout', compact([
             'products', 'sales', 'expenses', 'income', 'expense', 'profit', 'monthlyExpense'
         ]));

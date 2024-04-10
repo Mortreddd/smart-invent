@@ -17,7 +17,7 @@ class LoginUsingFirebaseController extends Controller
         try{
             $user = $auth->getUser($request->uid);
             Auth::login(Employee::firstWhere('email', $user->providerData[0]->email));
-
+            
             return Redirect::route('home')->with(['success' => 'Welcome back '. Auth::user()->first_name]);
         }
         catch(Exception $e) {

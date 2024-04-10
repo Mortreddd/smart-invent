@@ -8,13 +8,23 @@ use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class SalesResourceController extends Controller
 {
+    
+    
     public function index(Request $request)
     {
+        return new SalesResource(Sale::with(['product', 'size'])
+                ->latest()
+                ->paginate(10));
+    }
+    
+    public function chart(Request $request)
+    {
+        
         $fromYear = Carbon::now()->subYear();
         $toYear = Carbon::now();
         if($request->has('from') || $request->has('to')){

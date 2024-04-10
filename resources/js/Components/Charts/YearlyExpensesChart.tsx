@@ -12,9 +12,9 @@ interface OverAllExpensesProps {
 }
 
 export default function YearlyExpensesChart() {
-    const { isError, isLoading, data } = useFetch<OverAllExpensesProps>(
-        "expenses.api.yearly"
-    );
+    const { isError, isLoading, data } = useFetch<OverAllExpensesProps>({
+        url: "expenses.api.yearly",
+    });
     const expenses = data;
 
     const x = expenses?.map((expense) => {

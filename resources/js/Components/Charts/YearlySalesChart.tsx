@@ -10,8 +10,9 @@ interface OverAllSalesProps {
     year: number;
 }
 export default function YearlySalesChart() {
-    const { isError, isLoading, data } =
-        useFetch<OverAllSalesProps>("sales.api.yearly");
+    const { isError, isLoading, data } = useFetch<OverAllSalesProps>({
+        url: "sales.api.yearly",
+    });
 
     const sales: OverAllSalesProps[] | null = data;
     const x = sales?.map((sale) => {

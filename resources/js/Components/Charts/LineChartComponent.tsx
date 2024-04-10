@@ -3,7 +3,7 @@ import { LineChart } from "@mui/x-charts";
 
 interface LineChartProps {
     xAxis: any;
-    series: { data: any; color?: string; label?: string }[];
+    series: Array<{ data: any; color?: string; label?: string }>;
     title?: string;
     height?: number;
     width?: number;

@@ -11,6 +11,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/logout', LogoutController::class)->name('logout');
 
 
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('/products', 'index')->name('products.index');
+        Route::post('/product/create', 'store')->name('product.store');
+    });
 });

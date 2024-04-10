@@ -21,7 +21,7 @@ export default function InputText({
                 type={type}
                 value={value}
                 {...props}
-                className={`${className} input input-block input-bordered input-primary w-full max-w-xs`}
+                className={`${className} input input-block input-bordered input-primary w-full`}
             />
         </>
     );

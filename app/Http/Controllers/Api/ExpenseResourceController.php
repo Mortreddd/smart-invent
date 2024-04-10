@@ -7,10 +7,22 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ExpenseResource;
 use App\Models\Expense;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
+
 
 class ExpenseResourceController extends Controller
 {
+    
     public function index(Request $request)
+    {
+     
+        return new ExpenseResource(Expense::latest()
+            ->paginate(10));
+    }
+    
+    public function chart(Request $request)
     {
         return new ExpenseResource(
             Expense::select(DB::raw('SUM(amount) as total_expense'), DB::raw("MONTH(created_at) AS month"), DB::raw('YEAR(created_at) as year'))

@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
+
 
 class LoginController extends Controller
 {
@@ -18,11 +22,11 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        // dd($request->all());
-        $credentials = $request->only(['email', 'password']);
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($request->only('email', 'password'), $request->remember)){
             return Redirect::route('home');
+               
         }
+        
         return Redirect::back()->withErrors($request->messages());
     }
 
