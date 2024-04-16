@@ -7,13 +7,13 @@ import LoadingButton from "@/Components/LoadingButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function ResetPassword() {
-    const { token, email } = usePage().props;
+    const { token, email } = usePage<{ token: string; email: string }>().props;
     const { data, setData, post, processing, errors, transform, reset } =
         useForm({
+            token: token,
             email: email,
             password: "",
             password_confirmation: "",
-            token: token,
         });
     function handleSubmit(e: FormEvent) {
         post(route("password.update"), {
@@ -38,6 +38,32 @@ export default function ResetPassword() {
                             lg="28"
                         />
                     </div>
+                    {(errors.password_confirmation ||
+                        errors.password ||
+                        token) && (
+                        <div className="w-full">
+                            <div role="alert" className="alert alert-error">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="stroke-current shrink-0 h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                                <span>
+                                    {errors.password ||
+                                        errors.password_confirmation ||
+                                        token}
+                                </span>
+                            </div>
+                        </div>
+                    )}
                     <div className="w-full text-center h-fit">
                         <h2 className="block text-2xl text-gray-700">
                             Reset Password

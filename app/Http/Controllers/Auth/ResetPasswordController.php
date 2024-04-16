@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
     }
 
 
-    public function verify(Request $request)
+    public function verify(ResetPasswordRequest $request)
     {
         $validToken = DB::table('password_reset_tokens')->where([
             'email' => $request->email,

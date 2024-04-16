@@ -19,7 +19,6 @@ interface OverAllExpensesProps {
     total_expense: number;
 }
 export default function DashboardLayout() {
-    // &#8369; is the HTML entity for the Philippine Peso sign
     const { income, expense, profit, monthlyExpense } = usePage<{
         income: number;
         expense: number;
@@ -28,8 +27,8 @@ export default function DashboardLayout() {
     }>().props;
 
     const { expenses, sales } = usePage<{
-        expenses: OverAllExpensesProps[];
-        sales: OverAllSalesProps[];
+        expenses: Array<OverAllExpensesProps>;
+        sales: Array<OverAllSalesProps>;
     }>().props;
 
     const formatter = new Intl.NumberFormat("en-US");

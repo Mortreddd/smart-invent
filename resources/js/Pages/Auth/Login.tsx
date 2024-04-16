@@ -16,7 +16,7 @@ export default function Login() {
     async function RedirectSignIn(event: React.MouseEvent<HTMLButtonElement>) {
         const fetchUid = await GetUidFromGoogle();
         if (fetchUid === null) {
-            alert("Your account is not authorized to log in");
+            alert("Something went wrong! Please try again.");
             return;
         }
 

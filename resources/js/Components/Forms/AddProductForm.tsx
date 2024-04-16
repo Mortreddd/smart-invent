@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import React, { ChangeEvent, FormEvent } from "react";
 import InputText from "../InputText";
 import LoadingTable from "../LoadingTable";
@@ -14,7 +14,10 @@ interface AddProductFormProps {
     size: number | null;
 }
 
-export default function AddProductForm({ sizes }: { sizes: Array<Size> }) {
+export default function AddProductForm() {
+    const { sizes } = usePage<{
+        sizes: Array<Size>;
+    }>().props;
     const { data, setData, post, processing, errors, transform } =
         useForm<AddProductFormProps>({
             name: "",

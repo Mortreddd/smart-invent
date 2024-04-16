@@ -1,16 +1,14 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { Product } from "@/types/models/product";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Stock } from "@/types/models/stock";
 import Modal from "../Modal";
 import InputText from "../InputText";
 import AddProductForm from "../Forms/AddProductForm";
-import { Size } from "@/types/models/size";
 
 export default function SalesTables() {
-    const { stocks, sizes } = usePage<{
+    const { stocks } = usePage<{
         stocks: Array<Stock<Product>> | null;
-        sizes: Array<Size>;
     }>().props;
     const [filteredStocks, setFilteredStocks] = useState<Array<
         Stock<Product>
@@ -88,7 +86,7 @@ export default function SalesTables() {
 
                         {/* Put this part before </body> tag */}
                         <Modal>
-                            <AddProductForm sizes={sizes} />
+                            <AddProductForm />
                         </Modal>
                     </div>
                     <div className="overflow-x-auto fade-in-early">
@@ -125,7 +123,7 @@ export default function SalesTables() {
                                 {filteredStocks?.map(
                                     (stock: Stock<Product>, index: number) => (
                                         <tr
-                                            className="hover odd:bg-secondary"
+                                            className="hover odd:bg-secondary transition-colors duration-200 ease-"
                                             key={index}
                                         >
                                             <th className="text-center">
@@ -159,9 +157,21 @@ export default function SalesTables() {
                                             </td>
                                             <td>
                                                 <div className="flex justify-center gap-2">
-                                                    <button className="bg-amber-500 text-white hover:bg-amber-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2">
+                                                    <Link
+                                                        href={route(
+                                                            "product.edit",
+                                                            {
+                                                                product_id:
+                                                                    stock
+                                                                        .product
+                                                                        ?.id,
+                                                            }
+                                                        )}
+                                                        htmlFor="modal-edit-product"
+                                                        className="bg-amber-500 text-white hover:bg-amber-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2"
+                                                    >
                                                         Edit
-                                                    </button>
+                                                    </Link>
                                                     <button className="bg-red-500 text-white hover:bg-red-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2">
                                                         Delete
                                                     </button>
