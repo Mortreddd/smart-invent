@@ -79,7 +79,7 @@ export default function Drawer({
 
                         <li>
                             <Link
-                                href=""
+                                href={route("sales.index")}
                                 className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
                                     current === "Sales"
                                         ? "activeTab"
@@ -105,7 +105,7 @@ export default function Drawer({
                         </li>
                         <li>
                             <Link
-                                href=""
+                                href={route("employees.index")}
                                 className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
                                     current === "Employees"
                                         ? "activeTab"

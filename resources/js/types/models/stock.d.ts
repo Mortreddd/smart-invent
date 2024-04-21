@@ -8,7 +8,6 @@ export interface Stock<T> {
     price: number;
     created_at: EpochTimeStamp;
     updated_at: EpochTimeStamp;
-
     size?: Size;
     product?: T;
 }

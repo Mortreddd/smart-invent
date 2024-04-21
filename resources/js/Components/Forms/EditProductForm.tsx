@@ -5,21 +5,26 @@ import { Product } from "@/types/models/product";
 import { Size } from "@/types/models/size";
 import PrimaryButton from "../PrimaryButton";
 import LoadingButton from "../LoadingButton";
+import { Stock } from "@/types/models/stock";
 
 export default function EditProductForm() {
-    const { sizes } = usePage<{ sizes: Array<Size> }>().props;
+    const { sizes, stock } = usePage<{
+        sizes: Array<Size>;
+        stock: Stock<Product>;
+    }>().props;
+
     const { data, setData, processing, errors } = useForm<{
-        name: string;
+        name: string | undefined;
         price: number;
         stock: number;
         image: File | null;
         size: number | null;
     }>({
-        name: "",
-        price: 0,
-        stock: 0,
+        name: stock.product?.name,
+        price: stock.price,
+        stock: stock.stock,
         image: null,
-        size: null,
+        size: stock.size_id || null,
     });
 
     function handleProductImage(e: ChangeEvent<HTMLInputElement>) {
@@ -30,7 +35,7 @@ export default function EditProductForm() {
     }
     return (
         <React.Fragment>
-            <form className="w-full rounded-lg bg-white space-y-4">
+            <form className="w-[30rem] rounded-lg bg-white space-y-4">
                 <div className="w-full space-y-2">
                     <label htmlFor="product-name" className="text-lg">
                         Product Name
@@ -90,14 +95,20 @@ export default function EditProductForm() {
                         }
                         className=" ring-secondary focus:ring-1 focus:border-none border-secondary bg-white focus:outline-none rounded-lg w-full max-w-xs"
                     >
-                        <option disabled selected>
-                            Size
-                        </option>
-                        {sizes.map((size: Size, index: number) => (
-                            <option key={index} value={size.id}>
-                                {size.name}
-                            </option>
-                        ))}
+                        <option disabled>Size</option>
+                        {sizes.map((size: Size, index: number) =>
+                            size.id === stock.size_id ? (
+                                <option
+                                    key={index}
+                                    value={size.id}
+                                    selected
+                                ></option>
+                            ) : (
+                                <option key={index} value={size.id}>
+                                    {size.name}
+                                </option>
+                            )
+                        )}
                     </select>
                 </div>
                 <div className="w-full space-y-2">
@@ -125,7 +136,10 @@ export default function EditProductForm() {
                                 </button>
                             </div>
                         ) : (
-                            <div className="w-32 h-32 bg-gray-400 rounded mx-auto"></div>
+                            <img
+                                className="w-32 h-32 bg-gray-400 rounded object-center object-scale-down mx-auto"
+                                src={`images/${stock.product?.image}`}
+                            />
                         )}
                     </div>
                     <input

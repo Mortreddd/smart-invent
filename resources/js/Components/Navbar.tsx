@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, usePage } from "@inertiajs/react";
-import avatar from "@/Images/avatars/sample-image.jpg";
 import { Employee } from "@/types";
 export default function Navbar() {
     const { auth } = usePage().props;

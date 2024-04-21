@@ -8,12 +8,16 @@ use App\Models\Sale;
 use App\Http\Requests\Sales\CreateSaleRequest;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SaleController extends Controller
 {
     public function index()
     {
-        //
+        return Inertia::render('SalesLayout', [
+                
+            'sales' => Sale::latest('created_at')->with(['product', 'size'])->get()
+        ]);
     }
 
     public function store(CreateSaleRequest $request)

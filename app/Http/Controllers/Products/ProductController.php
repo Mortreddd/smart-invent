@@ -45,10 +45,11 @@ class ProductController extends Controller
         return Redirect::route('products.index')->with(['success' => 'Successfully created product']);
     }
 
-    public function edit(int $product_id)
+    public function edit(int $product_id, $size_id = null)
     {
         return Inertia::render('Product/EditProduct', [
-            'product' => Product::findOrFail($product_id)
+            'sizes' => Size::all(),
+            'stock' => Stock::where('product_id', $product_id)->with(['product'])->get()
         ]);
     }
 
