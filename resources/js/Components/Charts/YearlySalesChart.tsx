@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingTable from "../LoadingTable";
-import { ConvertIntoMonth } from "../../Utils/FormatDate";
+import { ConvertIntoMonth } from "@/Utils/FormatDate";
 import useFetch from "@/Hooks/useFetch";
 import DisplayError from "../DisplayError";
 import LineChartComponent from "./LineChartComponent";

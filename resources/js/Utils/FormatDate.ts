@@ -1,3 +1,5 @@
+import { DAYS_NAME } from "./Constants";
+
 const MONTHNAMES = [
     "January",
     "February",
@@ -28,4 +30,17 @@ export function MonthNameDayYear(timestamp: number): string {
 
 export function ConvertIntoMonth(month: number): string {
     return MONTHNAMES[month - 1];
+}
+
+export function ConvertDate(datetime: EpochTimeStamp): string {
+    var now = new Date(datetime);
+    return (
+        DAYS_NAME[now.getDay()] +
+        " " +
+        MONTHNAMES[now.getMonth()] +
+        " " +
+        now.getDate() +
+        " " +
+        now.getFullYear()
+    );
 }

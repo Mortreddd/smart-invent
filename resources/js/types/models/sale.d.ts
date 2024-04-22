@@ -8,4 +8,6 @@ export interface Sale<T, S> {
     updated_at: EpochTimeStamp;
     product?: T;
     size?: S;
+    month?: number;
+    year?: number;
 }

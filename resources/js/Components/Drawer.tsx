@@ -9,6 +9,8 @@ export default function Drawer({
     current?: string;
     children: React.ReactNode;
 }) {
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
     return (
         <React.Fragment>
             <div className="drawer">
@@ -79,7 +81,7 @@ export default function Drawer({
 
                         <li>
                             <Link
-                                href={route("sales.index")}
+                                href={`/sales?month=${month}&year=${year}`}
                                 className={`flex items-center justify-start gap-3 transition-colors ease-in-out duration-200 ${
                                     current === "Sales"
                                         ? "activeTab"

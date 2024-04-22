@@ -16,7 +16,7 @@ export default function EmployeesLaoyout() {
                 <section className="w-full h-[90vh] bg-gray-200">
                     <div className="w-full h-20 bg-white flex justify-between items-center px-10">
                         <h1 className="text-2xl font-bold">Employees</h1>
-                        <button className="bg-blue-500 text-white px-5 py-2 rounded-md">
+                        <button className="bg-blue-500 text-white px-5 py-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-blue-600">
                             Add Employee
                         </button>
                     </div>
@@ -60,11 +60,11 @@ export default function EmployeesLaoyout() {
                                             <td>{employee.email}</td>
                                             <td>{employee.phone}</td>
                                             <td>{employee.role}</td>
-                                            <td>
-                                                <button className="bg-blue-500 text-white px-5 py-2 rounded-md">
+                                            <td className="gap-2 text-center">
+                                                <button className="bg-amber-500 text-white px-5 py-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-amber-600">
                                                     Edit
                                                 </button>
-                                                <button className="bg-red-500 text-white px-5 py-2 rounded-md">
+                                                <button className="bg-red-500 text-white px-5 py-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-red-600">
                                                     Delete
                                                 </button>
                                             </td>
