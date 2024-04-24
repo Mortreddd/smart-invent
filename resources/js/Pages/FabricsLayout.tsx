@@ -1,37 +1,32 @@
 import Drawer from "@/Components/Drawer";
-import Navbar from "@/Components/Navbar";
-import { Head } from "@inertiajs/react";
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { Product } from "@/types/models/product";
-import { Link, usePage } from "@inertiajs/react";
-import { Stock } from "@/types/models/stock";
-import Modal from "@/Components/Modal";
 import InputText from "@/Components/InputText";
-import AddProductForm from "@/Components/Forms/AddProductForm";
+import Modal from "@/Components/Modal";
+import Navbar from "@/Components/Navbar";
 import Table from "@/Components/Tables/Table";
-import TableHeadRow from "@/Components/Tables/TableHeadRow";
-import TableHeadData from "@/Components/Tables/TableHeadData";
 import TableBody from "@/Components/Tables/TableBody";
-import TableRow from "@/Components/Tables/TableRow";
 import TableData from "@/Components/Tables/TableData";
+import TableHeadData from "@/Components/Tables/TableHeadData";
+import TableHeadRow from "@/Components/Tables/TableHeadRow";
+import { Fabric } from "@/types/models/fabric";
+import { Head, Link, usePage } from "@inertiajs/react";
+import { TableRow } from "@mui/material";
+import React, { useEffect, useState, ChangeEvent } from "react";
 
-export default function ProductsLayout() {
-    const { stocks } = usePage<{
-        stocks: Array<Stock<Product>> | null;
-    }>().props;
-    const [filteredStocks, setFilteredStocks] = useState<Array<
-        Stock<Product>
-    > | null>(stocks);
+export default function FabricsLayout() {
+    const { fabrics } = usePage<{ fabrics: Array<Fabric> }>().props;
+    const [filterFabrics, setFilteredFabrics] = useState<Array<Fabric> | null>(
+        fabrics
+    );
     const [search, setSearch] = useState<string>("");
 
     useEffect(() => {
-        if (stocks) {
-            const filtered = stocks.filter((stock: Stock<Product>) =>
-                stock.product?.name.toLowerCase().includes(search)
+        if (fabrics) {
+            const filtered = fabrics.filter((fabric: Fabric) =>
+                fabric.course?.name.toLowerCase().includes(search)
             );
-            setFilteredStocks(filtered);
+            setFilteredFabrics(filtered);
         }
-    }, [search, stocks]);
+    }, [search, fabrics]);
     return (
         <React.Fragment>
             <Head>
@@ -45,7 +40,6 @@ export default function ProductsLayout() {
                             <div className="flex items-center gap-2 w-72">
                                 <InputText
                                     type="text"
-                                    value={search}
                                     onChange={(
                                         e: ChangeEvent<HTMLInputElement>
                                     ) =>
@@ -71,7 +65,7 @@ export default function ProductsLayout() {
                                 htmlFor="modal"
                                 className="btn bg-blue-500 text-lg text-white hover:bg-blue-600 transition-colors duration-200 ease-in-out border-none items-center flex gap-2"
                             >
-                                Add Product
+                                Add Fabric
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -89,9 +83,7 @@ export default function ProductsLayout() {
                             </label>
 
                             {/* Put this part before </body> tag */}
-                            <Modal>
-                                <AddProductForm />
-                            </Modal>
+                            <Modal>h</Modal>
                         </div>
                         <div className="overflow-x-auto fade-in-early">
                             <Table className="table table-auto">
@@ -103,10 +95,10 @@ export default function ProductsLayout() {
                                         className="text-center text-md font-semibold"
                                         colSpan={2}
                                     >
-                                        Product
+                                        Fabric
                                     </TableHeadData>
                                     <TableHeadData className="text-center text-md font-semibold">
-                                        Size
+                                        Text Tile
                                     </TableHeadData>
                                     <TableHeadData className="text-center text-md font-semibold">
                                         Unit Price
@@ -122,12 +114,9 @@ export default function ProductsLayout() {
                                     </TableHeadData>
                                 </TableHeadRow>
                                 <TableBody className="bg-gray-50">
-                                    {filteredStocks?.length !== 0 ? (
-                                        filteredStocks?.map(
-                                            (
-                                                stock: Stock<Product>,
-                                                index: number
-                                            ) => (
+                                    {filterFabrics?.length !== 0 ? (
+                                        filterFabrics?.map(
+                                            (fabric: Fabric, index: number) => (
                                                 <TableRow
                                                     className="hover odd:bg-secondary transition-colors duration-200 ease-"
                                                     key={index}
@@ -138,10 +127,10 @@ export default function ProductsLayout() {
                                                     <TableData>
                                                         <div className="h-fit w-auto py-1">
                                                             <img
-                                                                src={`storage/images/${stock.product?.image}`}
+                                                                src={`storage/images/${fabric.image}`}
                                                                 alt={
-                                                                    stock
-                                                                        .product
+                                                                    fabric
+                                                                        .course
                                                                         ?.name
                                                                 }
                                                                 className="mx-auto h-20 object-scale-down object-center rounded-xl"
@@ -149,35 +138,25 @@ export default function ProductsLayout() {
                                                         </div>
                                                     </TableData>
                                                     <TableData className="text-center text-md font-semibold">
-                                                        {stock.product?.name}
+                                                        {fabric.course?.name}
+                                                    </TableData>
+                                                    <TableData className="text-center text-md font-semibold">
+                                                        {fabric.textile}
                                                     </TableData>
                                                     <TableData className="text-md text-center font-semibold">
-                                                        {stock.size?.name}
+                                                        {fabric.price}
                                                     </TableData>
                                                     <TableData className="text-md text-center font-semibold">
-                                                        {stock.price}
+                                                        {fabric.stock}
                                                     </TableData>
                                                     <TableData className="text-md text-center font-semibold">
-                                                        {stock.stock}
-                                                    </TableData>
-                                                    <TableData className="text-md text-center font-semibold">
-                                                        {stock.price *
-                                                            stock.stock}
+                                                        {fabric.price *
+                                                            fabric.stock}
                                                     </TableData>
                                                     <TableData>
                                                         <div className="flex justify-center gap-2">
                                                             <Link
-                                                                href={route(
-                                                                    "product.edit",
-                                                                    {
-                                                                        product_id:
-                                                                            stock
-                                                                                .product
-                                                                                ?.id,
-                                                                        size_id:
-                                                                            stock.size_id,
-                                                                    }
-                                                                )}
+                                                                href=""
                                                                 htmlFor="modal-edit-product"
                                                                 className="bg-amber-500 text-white hover:bg-amber-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2"
                                                             >
@@ -197,17 +176,7 @@ export default function ProductsLayout() {
                                                                 >
                                                                     <li>
                                                                         <Link
-                                                                            href={route(
-                                                                                "product.destroy",
-                                                                                {
-                                                                                    product_id:
-                                                                                        stock
-                                                                                            .product
-                                                                                            ?.id,
-                                                                                    size_id:
-                                                                                        stock.size_id,
-                                                                                }
-                                                                            )}
+                                                                            href=""
                                                                             className={
                                                                                 "text-black hover:text-white bg-white hover:bg-red-600 transition-colors duration-200 ease-in-out"
                                                                             }

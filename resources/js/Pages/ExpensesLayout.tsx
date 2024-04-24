@@ -119,7 +119,10 @@ export default function ExpensesLayout() {
                             )}
                         </div>
                         <div className="overflow-x-auto fade-in-early px-10 pb-5">
-                            <Table className="table table-fixed">
+                            <Table
+                                className="table table-fixed"
+                                tableRef={tableRef}
+                            >
                                 <TableHeadRow>
                                     <TableHeadData className="rounded-tl-xl text-center text-md font-semibold">
                                         {""}
