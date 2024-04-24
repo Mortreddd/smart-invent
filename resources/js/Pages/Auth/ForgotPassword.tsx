@@ -3,7 +3,7 @@ import { useForm, Head, Link, usePage } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import React, { ChangeEvent, FormEvent } from "react";
 import LoadingButton from "@/Components/LoadingButton";
-import PrimaryButton from "@/Components/PrimaryButton";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton";
 
 export default function ForgotPassword() {
     const { data, setData, processing, post, errors, reset } = useForm({

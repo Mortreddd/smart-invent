@@ -2,8 +2,7 @@
 
 namespace App\Mail\StockBroker;
 
-use App\Models\Employee;
-use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,8 +20,8 @@ class ProductStockWarningMail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        private array $emails,
-        private Product $product
+        private $emails,
+        private Stock $stock
     )
     {}
 
@@ -33,7 +32,7 @@ class ProductStockWarningMail extends Mailable
     {
         return new Envelope(
             from: new Address("emmanmale@gmail.com", "Smart Invent"),
-            subject: 'Stock Warning',
+            subject: 'Warning: Stock Running Out',
             to: $this->emails
         );
     }
@@ -45,6 +44,11 @@ class ProductStockWarningMail extends Mailable
     {
         return new Content(
             view: 'mail.warning-stock',
+            with : [
+                'product' => $this->stock->product,
+                'size' => $this->stock->size->name,
+                'stock' => $this->stock->stock,
+            ]
         );
     }
 

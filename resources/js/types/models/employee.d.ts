@@ -9,8 +9,8 @@ export interface Employee {
     gender: string;
     email: string;
     password: string;
-    remember_token: string | null;
-    email_verified_at: string | null;
+    remember_token?: string | null;
+    email_verified_at?: string | null;
     created_at: string;
     updated_at: string;
 }

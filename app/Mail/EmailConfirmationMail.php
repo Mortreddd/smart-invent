@@ -10,8 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
-
-class MailResetPassword extends Mailable
+class EmailConfirmationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,10 +18,8 @@ class MailResetPassword extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public string $email,
-        public string $token
-    )
-    {}
+        public Employee $employee
+    ){}
 
     /**
      * Get the message envelope.
@@ -31,8 +28,8 @@ class MailResetPassword extends Mailable
     {
         return new Envelope(
             from: new Address("emmanmale@gmail.com", "Smart Invent"),
-            subject: 'Reset Password Notification',
-            to: [$this->email]
+            subject: 'Email Confirmation',
+            to: [$this->employee->email]
         );
     }
 
@@ -42,13 +39,12 @@ class MailResetPassword extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.reset-password',
-            with: [
-                'token' => $this->token,
+            view: 'mail.email-confirmation',
+            with : [
+                'employee_id' => $this->employee->id
             ]
         );
     }
-
 
     /**
      * Get the attachments for the message.

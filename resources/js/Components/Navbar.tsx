@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, usePage } from "@inertiajs/react";
-import { Employee } from "@/types";
+import { Employee } from "@/types/models/employee";
 export default function Navbar() {
     const { auth } = usePage().props;
     const { user } = auth as { user: Employee };
@@ -51,7 +51,7 @@ export default function Navbar() {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt={user.first_name}
-                                    src={`images/${user.image}`}
+                                    src={`storage/images/${user.image}`}
                                     className="object-cover"
                                 />
                             </div>

@@ -1,9 +1,10 @@
-export interface Expense<T> {
+export interface Expense {
     id: number;
-    category_id: number;
+    name: string;
+    category: string;
     amount: Float32Array;
     created_at: EpochTimeStamp;
     updated_at: EpochTimeStamp;
-    log_id?: number;
-    category?: T;
+    month?: number;
+    year?: number;
 }

@@ -14,10 +14,9 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
+            $table->enum('category', ['Utilities', 'Supplies', 'Rent', 'Cost', 'Taxes', 'Others']);
             $table->decimal('amount', 10, 2);
             $table->timestamps();
-            $table->foreignIdFor(App\Models\Log::class)->nullable()->constrained()->cascadeOnDelete();
         });
     }
 

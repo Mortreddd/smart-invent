@@ -4,10 +4,11 @@ import TextInputError from "@/Components/TextInputError";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import React, { FormEvent, ChangeEvent } from "react";
 import LoadingButton from "@/Components/LoadingButton";
-import PrimaryButton from "@/Components/PrimaryButton";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton";
 
 export default function ResetPassword() {
     const { token, email } = usePage<{ token: string; email: string }>().props;
+    console.log(token, email);
     const { data, setData, post, processing, errors, transform, reset } =
         useForm({
             token: token,
@@ -16,8 +17,8 @@ export default function ResetPassword() {
             password_confirmation: "",
         });
     function handleSubmit(e: FormEvent) {
+        e.preventDefault();
         post(route("password.update"), {
-            preserveScroll: true,
             onError: () => reset("password", "password_confirmation"),
         });
     }
@@ -40,7 +41,7 @@ export default function ResetPassword() {
                     </div>
                     {(errors.password_confirmation ||
                         errors.password ||
-                        token) && (
+                        errors.token) && (
                         <div className="w-full">
                             <div role="alert" className="alert alert-error">
                                 <svg
@@ -59,7 +60,7 @@ export default function ResetPassword() {
                                 <span>
                                     {errors.password ||
                                         errors.password_confirmation ||
-                                        token}
+                                        errors.token}
                                 </span>
                             </div>
                         </div>
@@ -103,12 +104,12 @@ export default function ResetPassword() {
                         {errors.password_confirmation ? (
                             <TextInputError
                                 type={"password"}
-                                value={data.password}
+                                value={data.password_confirmation}
                                 placeholder={"Password is not match"}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                     setData({
                                         ...data,
-                                        password: e.target.value,
+                                        password_confirmation: e.target.value,
                                     })
                                 }
                             />

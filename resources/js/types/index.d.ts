@@ -31,16 +31,3 @@ export type PageProps<
         user: User;
     };
 };
-
-export interface Employee {
-    id: number;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    image: string;
-    gender: string;
-    email: string;
-    created_at: EpochTimeStamp;
-    updated_at: EpochTimeStamp;
-    log_id?: number;
-}

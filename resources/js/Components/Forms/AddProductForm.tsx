@@ -3,7 +3,7 @@ import React, { ChangeEvent, FormEvent } from "react";
 import InputText from "../InputText";
 import LoadingTable from "../LoadingTable";
 import { Size } from "@/types/models/size";
-import PrimaryButton from "../PrimaryButton";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import LoadingButton from "../LoadingButton";
 
 interface AddProductFormProps {

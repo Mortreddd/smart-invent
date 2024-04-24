@@ -47,9 +47,14 @@ class SaleController extends Controller
     public function store(CreateSaleRequest $request)
     {
         // * AN EVENT WHICH DETERMINES IF A PRODUCT IS LOW ON STOCK
-        
-        OutOfProductStockEvent::dispatch(
-            Sale::create($request->validated())
-        );
+        $sale = Sale::create($request->validated());
+
+        $stock = Stock::with(['product', 'size'])
+                    ->where('product_id', $request->product_id)
+                    ->where('size_id', $request->size_id)
+                    ->first();
+                        
+        $stock->decrement('stock', $sale->quantity);  
+        OutOfProductStockEvent::dispatchIf($stock->stock <= 30, $stock);
     }
 }

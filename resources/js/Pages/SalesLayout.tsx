@@ -4,14 +4,19 @@ import { Product } from "@/types/charts/TotaEarnedEachProduct";
 import { Sale } from "@/types/models/sale";
 import { Size } from "@/types/models/size";
 import { Head, router, usePage } from "@inertiajs/react";
-import React, { useState } from "react";
-import { useRef } from "react";
+import React, { useRef, ChangeEvent } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
-import { ChangeEvent } from "react";
 import { ConvertDate, ConvertIntoMonth } from "@/Utils/FormatDate";
+import Table from "@/Components/Tables/Table";
+import TableHeadRow from "@/Components/Tables/TableHeadRow";
+import TableHeadData from "@/Components/Tables/TableHeadData";
+import TableBody from "@/Components/Tables/TableBody";
+import TableRow from "@/Components/Tables/TableRow";
+import TableData from "@/Components/Tables/TableData";
+import DisabledButton from "@/Components/Buttons/DisabledButton";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton";
 
 export default function SalesLayout() {
-    // const { sales } = usePage<{ sales: Array<Sale<Product, Size>> }>().props;
     const parameters = new URLSearchParams(window.location.search);
     const currentMonth: number | null = parseInt(
         parameters.get("month") || "0",
@@ -68,7 +73,9 @@ export default function SalesLayout() {
                                         index: number
                                     ) => (
                                         <option key={index} value={sale.month}>
-                                            {ConvertIntoMonth(sale.month)}
+                                            {sale.month !== undefined
+                                                ? ConvertIntoMonth(sale.month)
+                                                : ""}
                                         </option>
                                     )
                                 )}
@@ -99,49 +106,40 @@ export default function SalesLayout() {
                                     )
                                 )}
                             </select>
-                            {/* <Link
-                                
-                                className="rounded px-4 py-2 bg-primary hover:bg-primarylight transition-colors text-center duration-200 ease-in-out text-white"
-                            >
-                                Search
-                            </Link> */}
                         </div>
                         {sales.length === 0 ? (
-                            <button className="btn btn-disabled">
-                                Export Excel
-                            </button>
+                            <DisabledButton>Export Excel</DisabledButton>
                         ) : (
-                            <button
+                            <PrimaryButton
+                                type="button"
                                 onClick={onDownload}
-                                className="btn btn-primary text-white"
+                                className=" text-white"
                             >
                                 Export Excel
-                            </button>
+                            </PrimaryButton>
                         )}
                     </div>
                     <div className="overflow-x-auto bg-white">
-                        <table
-                            ref={tableRef}
-                            className="table table-fixed table-md"
+                        <Table
+                            className={"table table-fixed table-md"}
+                            tableRef={tableRef}
                         >
-                            <thead>
-                                <tr className="bg-primary divide-x-2 text-gray-50 text-lg">
-                                    <th>No.</th>
-                                    <th>Product</th>
-                                    <th>Size</th>
-                                    <th>Quantity</th>
-                                    <th>Total Amount</th>
-                                    <th>Created At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                            <TableHeadRow>
+                                <TableHeadData>No.</TableHeadData>
+                                <TableHeadData>Product</TableHeadData>
+                                <TableHeadData>Size</TableHeadData>
+                                <TableHeadData>Quantity</TableHeadData>
+                                <TableHeadData>Total Amount</TableHeadData>
+                                <TableHeadData>Created At</TableHeadData>
+                            </TableHeadRow>
+                            <TableBody>
                                 {sales.length === 0 ? (
                                     <tr className="bg-white divide-x-2 text-gray-700 w-full text-lg">
-                                        <td colSpan={6}>
+                                        <TableData colSpan={6}>
                                             <div className="flex h-32 w-full justify-center items-center">
                                                 <h2>No Sales Available</h2>
                                             </div>
-                                        </td>
+                                        </TableData>
                                     </tr>
                                 ) : (
                                     sales.map(
@@ -149,28 +147,31 @@ export default function SalesLayout() {
                                             sale: Sale<Product, Size>,
                                             index: number
                                         ) => (
-                                            <tr
-                                                key={index}
-                                                className={
-                                                    "odd:bg-secondary transition-colors duration-300 ease-in-out hover:bg-gray-200"
-                                                }
-                                            >
+                                            <TableRow key={index}>
                                                 <th>{index + 1}</th>
-                                                <td>{sale.product?.name}</td>
-                                                <td>{sale.size?.name}</td>
-                                                <td>{sale.quantity}</td>
-                                                <td>{sale.earned}</td>
-                                                <td>
+                                                <TableData>
+                                                    {sale.product?.name}
+                                                </TableData>
+                                                <TableData>
+                                                    {sale.size?.name}
+                                                </TableData>
+                                                <TableData>
+                                                    {sale.quantity}
+                                                </TableData>
+                                                <TableData>
+                                                    {sale.earned}
+                                                </TableData>
+                                                <TableData>
                                                     {ConvertDate(
                                                         sale.created_at
                                                     )}
-                                                </td>
-                                            </tr>
+                                                </TableData>
+                                            </TableRow>
                                         )
                                     )
                                 )}
-                            </tbody>
-                        </table>
+                            </TableBody>
+                        </Table>
                     </div>
                 </section>
             </Drawer>

@@ -5,7 +5,7 @@ interface ModalProps {
     width?: string;
 }
 
-export default function Modal({ children, width = "96" }: ModalProps) {
+export default function Modal({ children, width = "w-[40rem]" }: ModalProps) {
     return (
         <React.Fragment>
             <input type="checkbox" id="modal" className="modal-toggle" />

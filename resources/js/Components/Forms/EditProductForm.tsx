@@ -3,7 +3,7 @@ import InputText from "../InputText";
 import { useForm, usePage } from "@inertiajs/react";
 import { Product } from "@/types/models/product";
 import { Size } from "@/types/models/size";
-import PrimaryButton from "../PrimaryButton";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import LoadingButton from "../LoadingButton";
 import { Stock } from "@/types/models/stock";
 
@@ -14,25 +14,27 @@ export default function EditProductForm() {
     }>().props;
 
     const { data, setData, processing, errors } = useForm<{
-        name: string | undefined;
+        name: string;
         price: number;
         stock: number;
-        image: File | null;
+        image: string | File | null | Blob | MediaSource;
         size: number | null;
     }>({
-        name: stock.product?.name,
-        price: stock.price,
-        stock: stock.stock,
-        image: null,
+        name: stock.product?.name || "",
+        price: stock.price || 0,
+        stock: stock.stock || 0,
+        image: stock.product?.image || null,
         size: stock.size_id || null,
     });
 
+    console.log(stock);
     function handleProductImage(e: ChangeEvent<HTMLInputElement>) {
         const { files } = e.target;
         if (files && files.length > 0) {
             setData({ ...data, image: files[0] });
         }
     }
+    console.log(data.image);
     return (
         <React.Fragment>
             <form className="w-[30rem] rounded-lg bg-white space-y-4">
@@ -60,6 +62,7 @@ export default function EditProductForm() {
                         <InputText
                             type="number"
                             id="product-name"
+                            value={data.price}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 setData({
                                     ...data,
@@ -77,6 +80,7 @@ export default function EditProductForm() {
                         <InputText
                             type="number"
                             id="product-name"
+                            value={data.stock}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 setData({
                                     ...data,
@@ -93,16 +97,14 @@ export default function EditProductForm() {
                         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                             setData({ ...data, size: parseInt(e.target.value) })
                         }
-                        className=" ring-secondary focus:ring-1 focus:border-none border-secondary bg-white focus:outline-none rounded-lg w-full max-w-xs"
+                        className=" ring-primary focus:ring-1 focus:border-primary border-primary bg-white focus:outline-none rounded-lg w-full max-w-xs"
                     >
                         <option disabled>Size</option>
                         {sizes.map((size: Size, index: number) =>
                             size.id === stock.size_id ? (
-                                <option
-                                    key={index}
-                                    value={size.id}
-                                    selected
-                                ></option>
+                                <option key={index} value={size.id} selected>
+                                    {stock.size?.name}
+                                </option>
                             ) : (
                                 <option key={index} value={size.id}>
                                     {size.name}
@@ -120,9 +122,9 @@ export default function EditProductForm() {
                             <div className="h-fit text-center">
                                 <div className="h-32 w-32 rounded mx-auto">
                                     <img
-                                        src={URL.createObjectURL(data.image)}
+                                        src={`storage/images/${data.image}`}
                                         className="object-center object-scale-down"
-                                        alt="Product Image"
+                                        alt={data.name}
                                     />
                                 </div>
                                 <button
@@ -136,17 +138,21 @@ export default function EditProductForm() {
                                 </button>
                             </div>
                         ) : (
-                            <img
-                                className="w-32 h-32 bg-gray-400 rounded object-center object-scale-down mx-auto"
-                                src={`images/${stock.product?.image}`}
-                            />
+                            <div className="w-32 h-32 bg-gray-400 rounded mx-auto"></div>
+                            // <img
+                            //     className="w-32 h-32 bg-gray-400 rounded object-center object-scale-down mx-auto"
+                            //     src={`images/${stock.product?.image}`}
+                            // />
                         )}
                     </div>
+                    {}
                     <input
                         type="file"
                         accept="jpg,png,jpeg"
                         onChange={handleProductImage}
-                        className="file-input file-input-bordered file-input-primary w-full focus:border-none"
+                        className={`${
+                            data.image ? "hidden" : "block"
+                        } file-input file-input-bordered file-input-primary w-full focus:border-none`}
                     />
                 </div>
                 <div className="w-full space-y-2">

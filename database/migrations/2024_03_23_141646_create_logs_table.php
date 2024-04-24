@@ -10,17 +10,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
 
         Schema::create('employees', function (Blueprint $table) {
             $table->id()->from(1000);
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
-            $table->enum('role', ['Admin', 'Cashier']);
+            $table->enum('role', ['Admin', 'Staff']);
             $table->string('image')->nullable();
             $table->string('phone');
             $table->enum('gender', ['M', 'F']);
@@ -40,7 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('logs');
         Schema::dropIfExists('employees');
     }
 };

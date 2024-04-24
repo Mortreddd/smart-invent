@@ -17,7 +17,7 @@ export default function PrimaryButton({
         <>
             <button
                 type={type}
-                className={`${className} btn-primary btn`}
+                className={`${className} btn-primary btn transition-colors duration-200 ease-in-out`}
                 {...rest}
             >
                 {children}

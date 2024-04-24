@@ -2,7 +2,7 @@ import { Head, useForm, router } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import InputText from "@/Components/InputText";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import PrimaryButton from "@/Components/PrimaryButton";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton";
 import { GetUidFromGoogle } from "@/Firebase/Google";
 import LoadingButton from "@/Components/LoadingButton";
 

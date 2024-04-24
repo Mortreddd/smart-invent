@@ -20,33 +20,35 @@ class ResetPasswordController extends Controller
 
     public function index(Request $request, $token )
     {
-        $email = $request->email;
-        return Inertia::render('Auth/ResetPassword', compact('token', 'email'));
+        return Inertia::render('Auth/ResetPassword', compact('token'));
     }
 
 
     public function verify(ResetPasswordRequest $request)
     {
-        $validToken = DB::table('password_reset_tokens')->where([
-            'email' => $request->email,
-            'token' => $request->token 
-        ])
-        ->first();
-        
-        if(!$validToken){
-            return Redirect::back()->with(['token' => 'Invalid token']);
-        }
-        else if($validToken->created_at > now()->subMinutes(15)){
-            return Redirect::back()->with(['token' => 'Token already expired']);
+        $validToken = DB::table('password_reset_tokens')
+            ->where([
+                'token' => $request->token 
+            ])
+            ->first();
+
+        if (!$validToken || Carbon::parse($validToken->created_at)->addMinutes(15)->isPast()) {
+            return Redirect::back()->withErrors(['token' => 'Token has expired or is invalid']);
         }
 
-        Employee::firstWhere('email', $request->email)
+        Employee::where('email', $request->email)
             ->update([
                 'password' => Hash::make($request->password),
                 'updated_at' => Carbon::now()
             ]);
-        $validToken->delete();
+        
+        DB::table('password_reset_tokens')
+            ->where([
+                'email' => $request->email,
+                'token' => $request->token 
+            ])
+            ->delete();
 
-        return Redirect::route('login')->with(['success' => 'Successfully update password']);
+        return Redirect::route('login')->with(['success' => 'Password successfully updated']);
     }
 }
