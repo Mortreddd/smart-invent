@@ -51,7 +51,7 @@ export default function Navbar() {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt={user.first_name}
-                                    src={`storage/images/${user.image}`}
+                                    src={`storage/${user.image}`}
                                     className="object-cover"
                                 />
                             </div>

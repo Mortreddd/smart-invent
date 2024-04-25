@@ -1,7 +1,6 @@
 import { useForm, usePage } from "@inertiajs/react";
 import React, { ChangeEvent, FormEvent } from "react";
 import InputText from "../InputText";
-import LoadingTable from "../LoadingTable";
 import { Size } from "@/types/models/size";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import LoadingButton from "../LoadingButton";
@@ -11,24 +10,27 @@ interface AddProductFormProps {
     price: number;
     stock: number;
     image: File | null;
-    size: number | null;
+    size_id: number | null;
 }
 
 export default function AddProductForm() {
     const { sizes } = usePage<{
         sizes: Array<Size>;
     }>().props;
-    const { data, setData, post, processing, errors, transform } =
+    const { data, setData, post, processing, errors, reset } =
         useForm<AddProductFormProps>({
             name: "",
             price: 0,
             stock: 0,
             image: null,
-            size: null,
+            size_id: null,
         });
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        post(route("products.store"));
+        post(route("products.store"), {
+            onSuccess: () =>
+                reset("name", "price", "image", "size_id", "stock"),
+        });
     }
     function handleProductImage(e: ChangeEvent<HTMLInputElement>) {
         const { files } = e.target;
@@ -94,9 +96,12 @@ export default function AddProductForm() {
                 <div className="w-full space-y-2">
                     <select
                         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                            setData({ ...data, size: parseInt(e.target.value) })
+                            setData({
+                                ...data,
+                                size_id: parseInt(e.target.value),
+                            })
                         }
-                        className=" ring-secondary focus:ring-1 focus:border-none border-secondary bg-white focus:outline-none rounded-lg w-full max-w-xs"
+                        className="  border focus:ring-1 focus:border-primary focus:ring-primary border-primary bg-white text-gray-500 focus:outline-none rounded-lg min-w-lg"
                     >
                         <option disabled selected>
                             Size

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Products;
 
-use App\Events\Product\CreateNewProductEvent;
 use App\Events\StockBroker\OutOfProductStockEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\CreateProductRequest;
@@ -32,16 +31,22 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         
-        $fileName  = 'products/'.Str::random(16).$request->file('image')->extension();
-        $request->file('image')->storeAs('public/products', $fileName);
+        $fileName  = 'products/'.Str::random(16).$request->file('image')->getClientOriginalExtension();
+        $request->file('image')->storeAs('public/iamges', $fileName);
         
-        CreateNewProductEvent::dispatch(
-            Product::create([
-                'name' => $request->name,
-                'image' => $fileName,
-                'created_at' => now()
-            ])
-        );
+        $product = Product::create([
+            'name' => $request->name,
+            'image' => $fileName,
+            'created_at' => now()
+        ]);
+
+        Stock::create([
+            'product_id' => $product->id,
+            'size_id' => $request->size_id,
+            'stock' => $request->stock,
+            'amount' => $request->price,
+            'created_at' => now()
+        ]);
         
         return Redirect::route('products.index')->with(['success' => 'Successfully created product']);
     }

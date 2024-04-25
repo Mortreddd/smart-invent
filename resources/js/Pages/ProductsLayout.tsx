@@ -138,7 +138,7 @@ export default function ProductsLayout() {
                                                     <TableData>
                                                         <div className="h-fit w-auto py-1">
                                                             <img
-                                                                src={`storage/images/${stock.product?.image}`}
+                                                                src={`storage/${stock.product?.image}`}
                                                                 alt={
                                                                     stock
                                                                         .product

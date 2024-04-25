@@ -77,7 +77,7 @@ export default function EmployeesLaoyout() {
                                             <TableData>
                                                 <div className="h-fit w-auto py-1">
                                                     <img
-                                                        src={`storage/images/${employee.image}`}
+                                                        src={`storage/${employee.image}`}
                                                         alt={
                                                             employee.first_name
                                                         }

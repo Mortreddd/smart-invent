@@ -33,11 +33,17 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::get('/', 'index')->name('employees.index');
         Route::post('/create', 'store')->name('employee.store');
         Route::get('/edit/{employee_id}', 'edit')->name('employee.edit');
+        Route::patch('/update/{employee_id}', 'update')->name('employee.update');
         Route::delete('/employee/delete/{employee_id}', 'destroy')->name('employee.destroy');
     });
 
     Route::controller(FabricController::class)->prefix('fabrics')->group(function(){
         Route::get('/', 'index')->name('fabrics.index');
+        Route::post('/create', 'store')->name('fabric.store');
+        Route::get('/edit/{fabric_id}', 'edit')->name('fabric.edit');
+        Route::patch('/update/{fabric_id}', 'update')->name('fabric.update');
+
+        Route::delete('/delete/{fabric_id}', 'destroy')->name('fabric.destroy');
     });
 
 

@@ -26,11 +26,10 @@ class EmployeeController extends Controller
 
     public function store(CreateEmployeeRequest $request)
     {
-        $file_directory = 'avatars/'.time().$request->first_name.'.'.$request->file('image')->getClientOriginalExtension();
-        $request->file('image')->storeAs('public/images', $file_directory);
+        $file_directory = 'employees/'.time().$request->first_name.'.'.$request->file('image')->getClientOriginalExtension();
+        $request->file('image')->storeAs( $file_directory);
         
         // The RegisteredEmployeeEvent will send an email confirmation according to their email
-
         RegisteredEmployeeEvent::dispatch(
             Employee::create([
                 'first_name' => Str::title($request->first_name),
@@ -49,10 +48,17 @@ class EmployeeController extends Controller
         return Redirect::back();
     }
 
+
+    public function edit(Request $request, int $employee_id)
+    {
+        return Inertia::render('Employee/EditEmployeeLayout', [
+            'employee' => Employee::find($employee_id)
+        ]);
+    }
+
     public function destroy(int $employee_id)
     {
         Employee::findorFail($employee_id)->delete();
-
         return Redirect::back();
     }
 }

@@ -10,7 +10,7 @@ import LoadingButton from "@/Components/LoadingButton";
 import { Stock } from "@/types/models/stock";
 
 export default function EditProduct() {
-    const { sizes, stock } = usePage<{
+    const { stock } = usePage<{
         sizes: Array<Size>;
         stock: Stock<Product>;
     }>().props;

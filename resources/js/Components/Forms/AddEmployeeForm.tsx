@@ -168,7 +168,7 @@ export default function AddEmployeeForm() {
                             className=" border focus:ring-1 focus:border-primary focus:ring-primary border-primary bg-white text-gray-500 focus:outline-none rounded-lg min-w-lg"
                         >
                             <option disabled selected>
-                                Gender
+                                Role
                             </option>
                             <option value={"Admin"}>{"Admin"}</option>
                             <option value={"Staff"}>{"Staff"}</option>

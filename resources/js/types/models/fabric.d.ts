@@ -3,7 +3,7 @@ import { Course } from "./course";
 export interface Fabric {
     id: number;
     course_id: number;
-    image: string;
+    image: File | null | string;
     textile: string;
     stock: number;
     price: number;

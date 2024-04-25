@@ -1,4 +1,5 @@
 import Drawer from "@/Components/Drawer";
+import AddFabricForm from "@/Components/Forms/AddFabricForm";
 import InputText from "@/Components/InputText";
 import Modal from "@/Components/Modal";
 import Navbar from "@/Components/Navbar";
@@ -32,7 +33,7 @@ export default function FabricsLayout() {
             <Head>
                 <title>Products</title>
             </Head>
-            <Drawer current="Products">
+            <Drawer current="Fabrics">
                 <Navbar />
                 <section className="w-full min-h-[90vh] p-10 bg-gray-200 ">
                     <section className="w-full h-full bg-white rounded">
@@ -83,7 +84,9 @@ export default function FabricsLayout() {
                             </label>
 
                             {/* Put this part before </body> tag */}
-                            <Modal>h</Modal>
+                            <Modal>
+                                <AddFabricForm />
+                            </Modal>
                         </div>
                         <div className="overflow-x-auto fade-in-early">
                             <Table className="table table-auto">
@@ -98,7 +101,7 @@ export default function FabricsLayout() {
                                         Fabric
                                     </TableHeadData>
                                     <TableHeadData className="text-center text-md font-semibold">
-                                        Text Tile
+                                        Textiles
                                     </TableHeadData>
                                     <TableHeadData className="text-center text-md font-semibold">
                                         Unit Price
@@ -127,7 +130,7 @@ export default function FabricsLayout() {
                                                     <TableData>
                                                         <div className="h-fit w-auto py-1">
                                                             <img
-                                                                src={`storage/images/${fabric.image}`}
+                                                                src={`storage/${fabric.image}`}
                                                                 alt={
                                                                     fabric
                                                                         .course
@@ -156,7 +159,13 @@ export default function FabricsLayout() {
                                                     <TableData>
                                                         <div className="flex justify-center gap-2">
                                                             <Link
-                                                                href=""
+                                                                href={route(
+                                                                    "fabric.edit",
+                                                                    {
+                                                                        fabric_id:
+                                                                            fabric.id,
+                                                                    }
+                                                                )}
                                                                 htmlFor="modal-edit-product"
                                                                 className="bg-amber-500 text-white hover:bg-amber-600 transition-colors duration-200 ease-in-out rounded text-lg px-4 py-2"
                                                             >
@@ -176,7 +185,13 @@ export default function FabricsLayout() {
                                                                 >
                                                                     <li>
                                                                         <Link
-                                                                            href=""
+                                                                            href={route(
+                                                                                "fabric.destroy",
+                                                                                {
+                                                                                    fabric_id:
+                                                                                        fabric.id,
+                                                                                }
+                                                                            )}
                                                                             className={
                                                                                 "text-black hover:text-white bg-white hover:bg-red-600 transition-colors duration-200 ease-in-out"
                                                                             }
@@ -198,7 +213,7 @@ export default function FabricsLayout() {
                                             <TableData colSpan={8}>
                                                 <div className="flex h-32 w-full justify-center items-center">
                                                     <h2>
-                                                        No Products Available
+                                                        No Fabrics Available
                                                     </h2>
                                                 </div>
                                             </TableData>

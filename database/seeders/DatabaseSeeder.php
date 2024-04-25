@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'middle_name' => 'M',
                 'last_name' => 'Male',
                 'role' => 'Admin',
-                'image' => 'avatars/sample-image.jpg',
+                'image' => 'employees/sample-image.jpg',
                 'phone' => '09458897515',
                 'gender' => 'M',
                 'email' => 'emmanmale@gmail.com',
